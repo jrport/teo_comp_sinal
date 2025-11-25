@@ -22,41 +22,48 @@ lero lero lero lero lero lero lero lero lero lero lero lero lero lero lero lero 
 #pagebreak()
 
 == Abstrações, notações específicas e corolários significativos
-Como parte desse trabalho, temos a missão de modular Máquinas de Turing que solucionem o problema preposto. Para tal, recebermos como entrada uma string representando a distribuição de carros dentre as avenidas A, B e C, seguindo o formato:
+Como parte desse trabalho, temos a missão de modular Máquinas de Turing que solucionem o problema preposto. Para tal, teremos como entrada uma string representando a distribuição de carros dentre as avenidas A, B e C, seguindo o formato:
 
-$ phi_0 ... phi_(n - 1) phi_n bar forall x in bb(N) and x <= n <-> phi_x in {a, b, c} $
+$ "Seja" w "uma palavra e" n in bb(N) $
+$ w = phi_0 * ... * phi_(n - 1) * phi_n $
+$ phi_k in {a, b, c} "tal que" 0 <= k <= n $
 
-Onde cada carro na avenida A será uma letra 'a', da B, 'b', e C, 'c'.
+Nesta representação, cada carro na avenida A será uma letra 'a', na avenida B, a letra 'b', e na C, 'c'.
 
 Será útil também a definição de uma função para cálculo da cardinalidade de uma letra, construída segundo o descrito abaixo:
 
 $ "Seja" w "uma palavra e" x "uma letra" $
-$ gamma_(x)(w): Sigma^* -> bb(N) $
+$ gamma_(x)(w): {a, b, c}^* -> bb(N) $
 $ gamma_(x)(w) = |{i in {1, ..., |w|} and i = x}| $
 
 Onde $gamma$ é a função de cardinalidade.
 
 De forma direta, $gamma_(x)(w)$ nos retorna o número de ocorrências da letra $x$ na palavra $w$.
 
-Durante este documento, iremos com frequência omitir o (w) para tornar a leitura mais leve.
+A partir do enunciado da questão, abstraímos duas propriedades que nosso automômato deve computar, as chamaremos de A e B.
 
-A partir do enunciado da questão, abstraímos duas decisões cujo nossos automômatos terão de tomar:
 
-1. Determinar a avenida com quantidade de carros superior a metade do total de automóveis em todas avenidas. <1> \
-  1.1. Ou seja, *determinar a letra $x$ cuja cardinalidade é superior ao tamanho total da string $w$ de entrada*: $ x in {a, b, c} bar gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $
-  1.2. Caso mais de uma avenida se qualifique, devemos respeitar a A sobre B, B sobre C e, por transitividade, A sobre C. <1.2>
-2. Determinar a avenida com a maior quantidade de carros. <2> \
-  2.1. Ou seja, *determinar a letra $x$ de maior cardinalidade na palavra $w$*: $ x, y, z in {a, b, c} and y != z and z != x and x != z $
-  $ gamma_(x)(w) > gamma_(y)(w) and gamma_(x)(w) > gamma_(z)(w) $
-  2.2. Em caso de empate, devemos respeitar a ordem de prioridade definida em 1.2.
+#block[
+#set enum(numbering: "I.")
+#set math.equation(numbering: "(A)")
++ Determinar a avenida com quantidade de carros superior a metade do total de automóveis em todas avenidas. <1> \
+  - Ou seja, *determinar a letra $x$ cuja cardinalidade é superior ao tamanho total da string $w$ de entrada*:
+  $ x in {a, b, c} bar gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $ <A>
+  - Caso mais de uma avenida se qualifique, devemos respeitar a A sobre B, B sobre C e, por transitividade, A sobre C. <1.2>
++ Determinar a avenida com a maior quantidade de carros. <2> \
+  - Ou seja, *determinar a letra $x$ de maior cardinalidade na palavra $w$*:
+  $ x, y, z in {a, b, c} and y != z and z != x and x != z \
+  gamma_(x)(w) > gamma_(y)(w) and gamma_(x)(w) > gamma_(z)(w) $
+  - Em caso de empate, devemos respeitar a ordem de prioridade definida em 1.2.
+]
 
-Também é importante considerar que a computação descrita em $2$. só deve ocorrer caso haja empate em $1.2$.
+Também é importante considerar que a computação da #link(<2>)[propriedade 2] só deve ocorrer caso não haja parada por estado final na computação da #link(<1>)[condição 1].
 
 #pagebreak()
 
-Para composição das propriedades descritas, consideramos algumas equivalências para viabilizar o processo de modelagem do automômato que são essenciais para compreensão e validação dele.
+Vamos considerar também algumas equivalências para facilitar a modelagem e validação do automômato.
 
-A primeira é centrada na propriedade 1.1:
+A primeira é centrada na #link(<A>)[propriedade A], a qual nos dá que:
 
 $ gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $
 $ 2 * gamma_(x)(w) > gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w) $
@@ -69,16 +76,15 @@ $ "Sejam" quad x, y, z in {a, b, c} | x != y and y != z $
 $ 2 * gamma_(x)(w) > gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w) $
 #let propriedade_i = $ gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w) $
 #block[
-  #set math.equation(numbering: "(I)")
-  $ #propriedade_i $
+  #set math.equation(numbering: "(A)")
+  $ #propriedade_i $ <C>
 ]<ineq>
 
 
-O que nos dá
-$ x, y, z in {a, b, c} | x != y and y != z $
+Ou seja,
 $ gamma_(x)(w) > (gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w))/2 <-> gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w) $ <I>
 
 
-Portanto, basta que nosso automômato compute propriedade I para que também valha 1.1.
+Portanto, basta que nosso automômato compute #link(<C>)[propriedade C] para que também valha a #link(<1>)[condição 1] do enunciado.
 
 #pagebreak()

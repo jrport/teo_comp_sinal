@@ -5,18 +5,18 @@
 = Máquina de uma única fita
 == Módulos e submódulos
 
-Para a máquina de uma fita, a qual nos referiremos por MT1, teremos dois módulos principais que chamaremos de A e B.
+Nossa máquina de uma única fita, a qual iremos tratar por *MT1*, terá dois módulos principais: $alpha$ e $beta$.
 
-O módulo A será responsável por verificar a condição #link(<1>)[1] do enunciado para alguma letra $a, b "ou" c$ através da propriedade #link(<ineq>)[I].
+O módulo $alpha$ será responsável por verificar se a #link(<1>)[condição 1] do enunciado para alguma letra $a, b "ou" c$ através da #link(<C>)[propriedade C].
 
-Para tal, a máquina buscará parar num estado final que represente qual a decisão tomada.
+Cada estado final da máquina representará a decisão de qual único sinal que deve ter prioridade dado um estado como _input_.
 
-Caso nenhum estado final seja alcançado dentro de A, o automômato recorrerá ao módulo B, onde avaliará a condição #link(<2>)[2] do problema.
+Caso nenhum estado final seja alcançado dentro de A, o automômato recorrerá ao módulo B, onde avaliará a #link(<2>)[condição 2] do problema.
 
 #figure(
   caption: "Arquitetura do automômato",
-  kind: "fluxograma",
-  supplement: [Fluxograma]
+  kind: "diagrama",
+  supplement: [Diagrama]
 )[
   #align(center, [
     #diagram(
@@ -24,14 +24,14 @@ Caso nenhum estado final seja alcançado dentro de A, o automômato recorrerá a
         let (a, b, c) = ((-0.5, 0), (0.5, 0), (3.5, 0))
 
         node(a, [])
-        node(b, align(center)[Módulo A], shape: house)
-        node(c, align(center)[Módulo B], shape: house)
+        node(b, align(center)[Módulo $alpha$], shape: house)
+        node(c, align(center)[Módulo $beta$], shape: house)
 
         edge(a, b, "-|>", label: text(size: 8pt)[Início])
 
         edge(
           b, c, "-|>",
-          label: [#align(center, [#text(size: 10pt)[Se o módulo A\ não parar]])]
+          label: [#align(center, [#text(size: 10pt)[Se o módulo $alpha$\ não parar]])]
         )
 
 
@@ -69,16 +69,16 @@ Caso nenhum estado final seja alcançado dentro de A, o automômato recorrerá a
   ])
 ]
 
-=== Dentro do Módulo A
-O módulo A por sua vez, irá sequencialmente analisar se #link(<I>)[a propriedade I] vale para cada letra em ${a,b,c}$. Essa operação será feita linearmente, uma vez para cada símbolo até que a condição de parada seja cumprida ou os símbolos se esgotem.
+=== Dentro do Módulo $alpha$
+O módulo $alpha$ irá analisar se #link(<C>)[a propriedade C] vale para alguma letra em ${a,b,c}$. Essa operação será feita linearmente, um símbolo por vez até que paremos em um estado final ou caso os símbolos a serem lidos se esgotem.
 
-Neste último caso entendemos que ninguém cumpriu com as condições necessárias para parada e recorremos ao módulo B.
+Neste último caso entendemos que ninguém cumpriu com as condições necessárias para parada e recorremos ao módulo $beta$.
 
 Dessa forma, abstraímos um submódulo $psi$ tal que:
-$ psi(x): "Computa se x cumpre a propriedade I, caso positivo, o automômato pára." $
+$ psi(x): "Computa se x cumpre a propriedade C, caso positivo, o automômato pára." $
 
-Verificaremos na ordem $psi(a)$, $psi(b)$, $psi(c)$. Garantindo a condição de desempate definida em #link(<1.2>)[1.2].
-Uma vez que caso alguma avaliação de $psi$ pare, as demais não serão computadas. Assim preservamos a ordem de prioridade nos empates.
+Verificaremos na ordem $psi(a)$, $psi(b)$, $psi(c)$. Garantindo a condição de desempate definida em #link(<1.2>)[I].
+Visto que caso alguma avaliação de $psi$ pare, as demais não serão computadas. Assim preservamos a ordem de prioridade nos empates.
 
 
 #figure(
@@ -102,7 +102,7 @@ Uma vez que caso alguma avaliação de $psi$ pare, as demais não serão computa
         node(b, align(center)[$psi(a)$], shape: format)
         node(c, align(center)[$psi(b)$], shape: format)
         node(d, align(center)[$psi(c)$], shape: format)
-        node(e, align(center)[Módulo B], shape: house)
+        node(e, align(center)[Módulo $beta$], shape: house)
         edge(a, b, "-|>", label: text(size: 8pt)[Início])
         edge(b, c, "->", label: text(size: 8pt)[$psi(a) "não parou"$])
         edge(c, d, "->", label: text(size: 8pt)[$psi(b) "não parou"$])
@@ -131,14 +131,13 @@ Tal que,
 Para isto, definimos dois conjuntos $X$ e $overline(X)$ da seguinte forma:
 
 Sejam,
-$ & n in bb(N) | x, gamma_n in {a, b, c} | w "é uma palavra." $
-$ w = gamma_0 * ... * gamma_n $
+$ & n in bb(N) | x, gamma_n in {a, b, c} | w "é uma palavra." | w = gamma_0 * ... * gamma_n $
 
-Temos,
+Então temos,
 $ X &= {forall gamma_i in w | gamma_i = x }, "e" \
 overline(X) &= {forall gamma_i in w | gamma_i != x } $
 
-Vamos computar se,
+Basta que verifiquemos:
 $ |X| > |overline(X)| $
 
 ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
