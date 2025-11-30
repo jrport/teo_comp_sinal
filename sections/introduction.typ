@@ -44,17 +44,16 @@ A partir do enunciado da questão, abstraímos duas propriedades que nosso autom
 
 
 #block[
-#set enum(numbering: "I.")
-#set math.equation(numbering: "(A)")
+#set enum(numbering: "1.")
 + Determinar a avenida com quantidade de carros superior a metade do total de automóveis em todas avenidas. <1> \
-  - Ou seja, *determinar a letra $x$ cuja cardinalidade é superior ao tamanho total da string $w$ de entrada*:
+  1.1 Ou seja, *determinar a letra $x$ cuja cardinalidade é superior ao tamanho total da string $w$ de entrada*:
   $ x in {a, b, c} bar gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $ <A>
-  - Caso mais de uma avenida se qualifique, devemos respeitar a A sobre B, B sobre C e, por transitividade, A sobre C. <1.2>
+  1.2 Caso mais de uma avenida se qualifique, devemos respeitar a A sobre B, B sobre C e, por transitividade, A sobre C. <1.2>
 + Determinar a avenida com a maior quantidade de carros. <2> \
-  - Ou seja, *determinar a letra $x$ de maior cardinalidade na palavra $w$*:
+  2.1 Ou seja, *determinar a letra $x$ de maior cardinalidade na palavra $w$*:
   $ x, y, z in {a, b, c} and y != z and z != x and x != z \
   gamma_(x)(w) > gamma_(y)(w) and gamma_(x)(w) > gamma_(z)(w) $
-  - Em caso de empate, devemos respeitar a ordem de prioridade definida em 1.2.
+  2.2 Em caso de empate, devemos respeitar a ordem de prioridade definida em 1.2.
 ]
 
 Também é importante considerar que a computação da #link(<2>)[propriedade 2] só deve ocorrer caso não haja parada por estado final na computação da #link(<1>)[condição 1].
@@ -76,7 +75,7 @@ $ "Sejam" quad x, y, z in {a, b, c} | x != y and y != z $
 $ 2 * gamma_(x)(w) > gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w) $
 #let propriedade_i = $ gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w) $
 #block[
-  #set math.equation(numbering: "(A)")
+  #set math.equation(numbering: (..nums) => $"("Delta")"$)
   $ #propriedade_i $ <C>
 ]<ineq>
 
@@ -84,7 +83,8 @@ $ 2 * gamma_(x)(w) > gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w) $
 Ou seja,
 $ gamma_(x)(w) > (gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w))/2 <-> gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w) $ <I>
 
+#let target_1 = link(<C>)[corolário $Delta$]
 
-Portanto, basta que nosso automômato compute #link(<C>)[propriedade C] para que também valha a #link(<1>)[condição 1] do enunciado.
+Portanto, basta que nosso automômato compute o #target_1 para que também valha a #link(<1>)[condição 1] do enunciado.
 
 #pagebreak()
