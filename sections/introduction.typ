@@ -34,7 +34,7 @@ Será útil também a definição de uma função para cálculo da cardinalidade
 
 $ "Seja" w "uma palavra e" x "uma letra" $
 $ gamma_(x)(w): {a, b, c}^* -> bb(N) $
-$ gamma_(x)(w) = |{i in {1, ..., |w|} and i = x}| $
+$ gamma_(x)(w) = |{i in {1, ..., |w|} and phi_i = x}| $
 
 Onde $gamma$ é a função de cardinalidade.
 
@@ -43,22 +43,22 @@ De forma direta, $gamma_(x)(w)$ nos retorna o número de ocorrências da letra $
 A partir do enunciado da questão, abstraímos duas propriedades que nosso automômato deve computar, as chamaremos de A e B.
 
 
-#block[
-#set enum(numbering: "1.")
-+ Determinar a avenida com quantidade de carros superior a metade do total de automóveis em todas avenidas. <1> \
+1. Determinar a avenida com quantidade de carros superior a metade do total de automóveis em todas avenidas. <1> \
   1.1 Ou seja, *determinar a letra $x$ cuja cardinalidade é superior ao tamanho total da string $w$ de entrada*:
-  $ x in {a, b, c} bar gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $ <A>
+  $ x in {a, b, c} bar gamma_(x)(w) > |w|/2 $ <A>
+  $ "dado que as únicas letras de "w" são "{a, b, c}, "segue que:" $
+  $ |w| = gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w) therefore  $
+  $ gamma_(x)(w) > (|w|)/2 <-> gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $
   1.2 Caso mais de uma avenida se qualifique, devemos respeitar a A sobre B, B sobre C e, por transitividade, A sobre C. <1.2>
-+ Determinar a avenida com a maior quantidade de carros. <2> \
+#pagebreak()
+2. Determinar a avenida com a maior quantidade de carros. <2> \
   2.1 Ou seja, *determinar a letra $x$ de maior cardinalidade na palavra $w$*:
   $ x, y, z in {a, b, c} and y != z and z != x and x != z \
   gamma_(x)(w) > gamma_(y)(w) and gamma_(x)(w) > gamma_(z)(w) $
   2.2 Em caso de empate, devemos respeitar a ordem de prioridade definida em 1.2.
-]
 
-Também é importante considerar que a computação da #link(<2>)[propriedade 2] só deve ocorrer caso não haja parada por estado final na computação da #link(<1>)[condição 1].
+Também é importante considerar que a computação da #link(<2>)[propriedade 2] só deve ser avaliada caso não haja parada por estado final na computação da #link(<1>)[condição 1].
 
-#pagebreak()
 
 Vamos considerar também algumas equivalências para facilitar a modelagem e validação do automômato.
 
@@ -85,6 +85,8 @@ $ gamma_(x)(w) > (gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w))/2 <-> gamma_(x)(w)
 
 #let target_1 = link(<C>)[corolário $Delta$]
 
-Portanto, basta que nosso automômato compute o #target_1 para que também valha a #link(<1>)[condição 1] do enunciado.
+Portanto, basta que nosso automômato compute o #target_1:
+#propriedade_i
+para que também seja verificada a #link(<1>)[condição 1] do enunciado e portanto determinada a avenida prioritária.
 
 #pagebreak()
