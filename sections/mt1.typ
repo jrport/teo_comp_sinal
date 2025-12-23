@@ -3,9 +3,9 @@
 #import fletcher.shapes: house, diamond, circle
 
 = Máquinas de Turing
-Para fins de tratar a complexidade do problema de maneira didática, facilitando a argumentação e desenvolvimento, vamos abstrair porções de MT's (Máquinas de Turing) em módulos.
+Com objetivo de tratar da complexidade do problema de maneira didática, facilitando nossa argumentação, além de simplificar o processo de desenvolvimento da máquina abstrata, vamos segmentar porções de MT's (Máquinas de Turing) em 'módulos'.
 
-Pela definição de MT vinda do Newton (2006) temos
+Dada a definição de uma MT:
 $ "MT" = (E, Sigma, Γ, delta, i, F) $
 $E$: Conjunto finito de estados \
 $Sigma$: Alfabeto de entrada \
@@ -14,17 +14,17 @@ $delta$: Funções de transição \
 $i$: Estado inicial \
 $F$: Conjunto de estados finais
 
-A partir dela, definimos o módulo $MM$ de MT como:
+Obtermos um módulo $MM$ de MT tal que:
 $ MM = (E_sha, Sigma, Γ, delta_sha, e_("entrada"), E_("saída")) $
 Onde, \
-$E_sha$: Subconjunto dos estados em $E$. \
-$delta_sha$: Subconjunto de transições de $delta$ que atuem sobre os estados definidos em $E_sha$. \
-$e_("entrada")$: Um estado inicial em $E_sha$, denota o ínicio do módulo. Vamos nos referir a ele como estado de entrada. \
+$E_sha$: Subconjunto de $E$. \
+$delta_sha$: Subconjunto de $delta$ que atuem somente sobre os estados definidos em $E_sha$. \
+$e_("entrada")$: Um estado eleito de $E_sha$, denota o ínicio do módulo. Vamos nos referir a ele como estado de entrada. \
 $e_("saída")$: Um conjunto de estados finais pertencentes a $E_sha$, representam o fim da computação do módulo. Chamaremos eles de estados de saída. \
 
 Importante notar que não necessariamente $e_("saída") subset F$. Ou seja, o fim da computação de $MM$ não é necessário e suficiente para parada da MT.
 
-No decorrer desse texto usaremos a noção de um "submódulo". Tal estrutura será útil a nível didático e deve ter seu conceito compreendido como análogo ao de um módulo, só que ao invês de ser definido em função de toda a MT, ele tem seus elementos delimitados por um $MM$.
+No decorrer desse texto também usaremos o termo "submódulo". Essa estrutura é análoga à um módulo e sua definição é construída em função de um módulo $MM$ ao invês da MT por inteiro. Essa estrutura também tem finalidades puramente organizacionais.
 
 #pagebreak()
 
@@ -35,20 +35,22 @@ Nossa máquina de uma fita só, ou #mt1, é definida como:
 $ "MT"_1 = (E, Sigma, Γ, delta, i, F) $
 Tal que, \
 $Sigma = {a, b, c}$ \
-$Γ = {a, b, c, a_a, a_b, a_c, b_a, b_b, b_c, c_a, c_b, c_c, <, epsilon }$ \
+$Γ = {forall x,y in Sigma | x_y} union {epsilon, <} "ou" {a, b, c, a_a, a_b, a_c, b_a, b_b, b_c, c_a, c_b, c_c, <, epsilon }$ \
 $F = {F_a, F_b, F_c}$
 
+$<$ é o símbolo delimitador do início da fita. Tratamos a fita como infinita a direita. $epsilon$ representa o vazio que preenche os espaços a direita da palavra inserida.
+
 Cada estado final representa a decisão de conceder prioridade à uma avenida no cruzamento, onde:
-$ x in Sigma bar F_x: "Sistema prioriza avenida x" $
+$ x in Sigma bar F_x: "Sinaleira prioriza avenida x" $
 
 As transições $delta$, estados $E$, $F$ e $i$ serão definidos em representações gráficas mais a frente.
 
-#mt1 tem dois módulos principais: $alpha$ e $beta$.
+#mt1 tem dois módulos principais: $alpha$ e $beta$ definidos a seguir.
 
 === Módulos e submódulos
 O módulo $alpha$ será responsável por verificar se a #link(<1>)[condição 1] do enunciado vale para alguma letra de $Sigma$ através do #target_1.
 
-Caso nenhum estado final seja alcançado dentro de $alpha$, o automômato recorrerá ao módulo B, onde avaliará a #link(<2>)[condição 2] do problema. Verificando qual letra tem a maior cardinalidade na entrada.
+Caso nenhum estado final seja alcançado dentro de $alpha$, o automômato recorrerá ao módulo $beta$, onde avaliará a regra de desempate definida na #link(<2>)[condição 2] do problema. Verificando qual símbolo tem a maior cardinalidade na entrada.
 
 A macroarquitetura da máquina tem o formato:
 
@@ -111,21 +113,23 @@ A macroarquitetura da máquina tem o formato:
 #pagebreak()
 
 === Módulo $alpha$
-O módulo $alpha$ irá analisar se o #target_1 vale para alguma letra em ${a,b,c}$. Caso verifique validade de tal propriedade para a letra-alvo, é eleito o estado final apropriado representativo de uma decisão quanto a avenida prioritária para a sinaleira e a computação cessa.
+O módulo $alpha$ irá analisar se o #target_1 vale para alguma letra em ${a,b,c}$. Caso verifique validade de tal propriedade para a letra-alvo, é eleito o estado final apropriado representativo da decisão apropriada e computação cessa.
 
-Visto que o automômato encerra processamento assim que é validado $Delta$ para um elemento alvo, extraímos uma capacidade de "curto-circuito", a qual em conjunto a um processamento sequencial ordenado dos elementos de $Sigma$ permite zelar pela regra de desempate definida por #link(<1.2>)[1.2]
+Visto que o automômato encerra processamento assim que é validado $Delta$ para um elemento, extraímos uma capacidade de "curto-circuito", a qual em conjunto a um processamento ordenado dos elementos de $Sigma$ permite zelar pela regra de desempate definida por #link(<1.2>)[1.2]
 
 Portanto, efetuamos essa avaliação para as letra na ordem "a", "b" e, então, "c".
 
+Por exemplo, caso valha #target_1 para $a$ e para $b$ ou $c$, como primeiro verificamos $a$ e interrompemos o processamento em caso positivo, implicitamente zelamos pela ordem de desempate.
+
 Caso nenhuma letra do alfabeto cumpra com uma propriedade alvo do módulo, a computação é encaminhada para o módulo $beta$.
 
-Dessa forma, abstraímos um submódulo $psi$ tal que:
+Quebramos cada etapa de avaliação de um símbolo em uma unidade, ou submódulo, $psi$, tal que:
 $ psi(x): "Computa se x cumpre a propriedade "Delta", caso positivo, o automômato pára em" F_x $
 
-Então avaliaremos, em ordem, $psi(a)$, $psi(b)$, $psi(c)$, de acordo a imagem:
+Então, o interior de $alpha$ terá o formato:
 
 #figure(
-  caption: "Formato do Módulo A",
+  caption: $"Formato do Módulo" alpha$,
   kind: "fluxograma",
   supplement: [Fluxograma]
 )[
@@ -163,9 +167,38 @@ Então avaliaremos, em ordem, $psi(a)$, $psi(b)$, $psi(c)$, de acordo a imagem:
   ])
 ]
 
+#pagebreak()
 === Submódulo $psi$
 
-Definimos de forma genérica o submódulo $psi$, dado que $x, y in Sigma$ e $x != y$, $psi(x)$ será:
+Como já definimos, $psi$ deve computar:
+
+$ Delta: #propriedade_i "onde" x, y, z in {a, b, c} " e " x != y != z $
+
+Para tal, devemos comparar a _cardinalidade_ de $x$ com a de $y$ e $z$.
+
+Com esse objetivo, vamos efetivamente *mapear* cada ocorrência de $x$ com uma de $y$ e de $z$.
+
+A natureza dessa correspondência caracteriza diretamente a relação entre as cardinalidades envolvidas.
+
+Considere $X_w$ como o conjunto de aparições de $x$ em $w$, e $Y_w$ e $Z_w$ como conjuntos análogos para outras letras.
+
+Teremos que a computação de $Delta$ é, essencialmente, a verificação da relação entre os conjuntos $X_w$ e $Y_w$ $union$ $Z_w$ -- o qual chamaremos de $"YZ"_w$
+
+Basta que caracterizemos esse relação para computar a propriedade desejada.
+$ f: X_w -> "YZ"_w $
+
+Da análise dela, teremos 3 possíveis interpretações:
++ Se bijetora, temos $gamma_(x)(w) = gamma_(y)(w) + gamma_(z)(w)$
++ Se injetiva, mas não sobrejetiva, temos $gamma_(x)(w) < gamma_(y)(w) + gamma_(z)(w)$
++ Se sobrejetiva, mas não injetiva, temos $gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w)$
+
+Portanto, $psi(x)$ na $"MT"$ deve buscar parear cada $x$ em $w$ com um $y$ ou $z$, de forma que nenhum outro $x$ divida a mesma ocorrência como par. Até que:
+- Sejam esgotados os $x$'s, o que nos dá que $gamma_(x)(w) <= gamma_(y)(w) + gamma_(z)(w)$
+- Sejam esgotados os $y$'s e $z$'s, o que nos dá que $gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w)$
+
+#pagebreak()
+
+Tendo $x, y in Sigma$ onde $x != y$, $psi(x)$ tem a seguinte estrutura:
 
 #import fletcher.shapes: circle
 #align(center)[
@@ -179,13 +212,14 @@ Definimos de forma genérica o submódulo $psi$, dado que $x, y in Sigma$ e $x !
         #diagram(
           node-stroke: .1em,
           {
-            let (a, b, c, d, e, f) = (
+            let (a, b, c, d, e, f, g) = (
               (-0.5, 0),
               (0.5, 0),
               (4.0, 0),
               (0.5, 4),
               (4.0, 2),
               (4.0, 4),
+              (6.5, 0)
             )
             let format = circle
             let row_y = 1
@@ -196,7 +230,13 @@ Definimos de forma genérica o submódulo $psi$, dado que $x, y in Sigma$ e $x !
               $\*,\* bar "E"$
             ]
             node(c, align(center)[$E_2$], shape: format)
+            node(g, align(center)[$E_"out"$], shape: format)
+            edge(c, "-|>", c, bend: -130deg, loop-angle: 260deg)[
+              $*_\x,*_\x bar "D"\
+              y,y bar "D"$
+            ]
             edge(b, "-|>", c)[<,<|D]
+            edge(c, "-|>", g)[$epsilon, epsilon bar D$]
             node(d, align(center)[$F_x$], shape: format, extrude: (0, -2))
             edge(c, e, "-|>", label-side: left)[
               $x, x_x bar "E"$
@@ -226,25 +266,29 @@ Definimos de forma genérica o submódulo $psi$, dado que $x, y in Sigma$ e $x !
     ]
   ]
 ]
-#pagebreak()
 
-Vamos quebrar as transições em algoritmo a partir do qual verificaremos a computação das propriedades desejadas, tal que os passos são:
+$F_x$ simboliza a parada total da MT1 na decisão de priorizar a avenida $x$.
 
-Vamos quebrar o fluxo das transições num passo-a-passo para facilitar a verificação da computação das propriedades desejadas. As etapas seguem:
+Já $E_"out"$ será:
+- $E_"in"$ do submódulo $psi$ seguinte, caso $x!=c$, *ou*;
+- o estado de entrada do módulo $beta$, caso $x=c$;
+
+Vamos então quebrar o fluxo das transições para verificar formalmente a computação das propriedades desejadas. As etapas serão:
 
 #block[
   #set enum(numbering: (i) => "Passo " + str(i) + " -")
-+ Lê cada letra de $w$ até encontrar uma ocorrência de $x$;
++ Rebobina ao início da fita.
++ Avança pela fita passando por todos _y_ e $x_x$ até encontrar um $x$.
   #block[
     #set enum(numbering: "a)")
-    + Caso não encontre $x$:
-      - x não cumpre #link(<C>)[a propriedade C], escapamos para $E_("out")$ e cessamos computação.
-    + Encontrou um $x$:
-      - Sobreescreveremos o $x$ na fita com $x_x$ e seguimos para o passo 2.
+    + Caso não ache $x$:
+      - x não cumpre #link(<C>)[a propriedade C], escapamos para $E_("out")$.
+    + Caso ache um $x$:
+      - Sobreescreveremos o $x$ na fita com $x_x$ e seguimos para o passo 3.
   ]
 
-+ Retornamos ao início da fita;
-+ Buscamos uma letra $y$ tal que $y in.not {x, x_x}$;
++ Rebobina pro início da fita;
++ Avança pela fita buscando uma letra $y$ tal que $y in.not {x, x_x}$;
   #block[
     #set enum(numbering: "a)")
     + Caso não encontre:
@@ -258,27 +302,29 @@ Vamos quebrar o fluxo das transições num passo-a-passo para facilitar a verifi
 
 Vamos para a prova de que o algoritmo descrito verifica #link(<C>)[C].
 
-De antemão é relevante notar que o _script_ é um _loop_ que se repete até parar em 1-a) ou 3-a).
+Tomamos por certeza a eventual parada, em razão da palavra de entrada ser finita e que para que cesse o processamento é necessário e suficiente que sejam esgotados elementos:
+- Distintos de $x$ e $x_x$, ou
+- Idênticos à $x$
 
-Tomamos por certeza a eventual parada, em razão da palavra de entrada ser finita e que para que cesse o processamento é necessário e suficiente que sejam esgotados elementos distintos ou iguais a _x_.
-
-Uma vez que sempre retornamos ao início da fita após encontrar uma elemento satisfaça uma dessas condições, e que marcamos elementos após encontra-los, temos por óbvio a garantia de que haverá parada.
+Sempre que encontramos um elemento que satisfaça uma dessas condições, o consumimos, substituindo-o segundo a regra $x -> x_x$, então retornamos ao início da fita e buscamos novamente. Essa marcação tem como finalidade garantir que não reprocessaremos uma letra já consumida. Dessa forma temos a certeza de que a máquina pára para qualquer _string_ de $Sigma^*$.
 
 Vamos agora para demonstração de como esse processo também computa a validade de #link(<C>)[C] para _x_.
 
-#pagebreak()
-Primeiro estabeleçamos que,
+Formalizando os objetos relevantes para a prova temos
 
-$ & n in bb(N) | x, gamma_n in {a, b, c} | w "é uma palavra." | w = gamma_0 * ... * gamma_n $
+$ n,i in bb(N) | x, phi_n in {a, b, c} | w "é uma palavra." | w = phi_0 * ... * phi_n $
 
-Por meio do _loop_ vamos gradativamente consumindo as letras de _w_ e produzindo dois conjuntos disjuntos.
+Conforme a execução da máquina, o módulo $psi$ formará dois conjuntos.
+A instrução a) do passo 2 compõe $X$:
+$ X &= {i bar forall phi_i in w | phi_i = x_x } $
+E a) do passo 4 constroe $overline(X)$:
+$ overline(X) &= {i | forall y in Sigma and y != x | phi_i = y_x } $
 
-Os passos 1, 1.2, e 2 e 4 constroem $X$:
-$ X &= {forall gamma_i in w | gamma_i = x } $
-Enquanto 3, 3.2 e 4 definem $overline(X)$:
-$ overline(X) &= {forall gamma_i in w | gamma_i != x } $
 Basta que verifiquemos:
 $ |X| > |overline(X)| $
+
+// Basta que verifiquemos:
+// $ |X| > |overline(X)| $
 
 // Ele terá por objetivo verificar se #link(<C>)[a propriedade C] vale para uma letra do alfabeto.
 //
