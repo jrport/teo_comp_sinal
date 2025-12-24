@@ -45,10 +45,10 @@ A partir do enunciado da questão, abstraímos duas propriedades que nosso autom
 
 1. Determinar a avenida com quantidade de carros superior a metade do total de automóveis em todas avenidas. <1> \
   1.1 Ou seja, *determinar a letra $x$ cuja cardinalidade é superior ao tamanho total da string $w$ de entrada*:
-  $ x in {a, b, c} bar gamma_(x)(w) > |w|/2 $ <A>
+  $ x in {a, b, c} bar gamma_(x)(w) > (|w|)/2 $ <A>
   $ "dado que as únicas letras de "w" são "{a, b, c}, "segue que:" $
-  $ |w| = gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w) therefore  $
-  $ gamma_(x)(w) > (|w|)/2 <-> gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $
+  $ |w| = gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w) $
+  $ "Portanto, " gamma_(x)(w) > (|w|)/2 <=> gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $
   1.2 Caso mais de uma avenida se qualifique, devemos respeitar a A sobre B, B sobre C e, por transitividade, A sobre C. <1.2>
 #pagebreak()
 2. Determinar a avenida com a maior quantidade de carros. <2> \
@@ -81,7 +81,7 @@ $ 2 * gamma_(x)(w) > gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w) $
 
 
 Ou seja,
-$ gamma_(x)(w) > (gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w))/2 <-> gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w) $ <I>
+$ gamma_(x)(w) > (gamma_(x)(w) + gamma_(y)(w) + gamma_(z)(w))/2 <=> gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w) $ <I>
 
 #let target_1 = link(<C>)[corolário $Delta$]
 
