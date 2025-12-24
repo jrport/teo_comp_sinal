@@ -27,17 +27,13 @@
 
   #v(2em)
 
-  #grid(
-    columns: (1fr, 1fr),
-    align(center)[
-      João Roberto - 222217111 \
+  #align(center)[
       Caio Mello - XXXX \
-    ],
-    align(center)[
+      João Roberto - 222217111 \
+      Jonas - ZZZZZZZZ \
+      Leandro - ZZZZZZZZ \
       Vinicius - YYYYYYYYY \
-      Ciclano - ZZZZZZZZ \
-    ]
-  )
+    ],
 
   #v(3em)
 

@@ -278,58 +278,138 @@ Vamos então quebrar o fluxo das transições para verificar formalmente a compu
 #block[
   #set enum(numbering: (i) => "Passo " + str(i) + " -")
 + Rebobina ao início da fita.
-+ Avança pela fita passando por todos _y_ e $x_x$ até encontrar um $x$.
-  #block[
-    #set enum(numbering: "a)")
-    + Caso não ache $x$:
-      - x não cumpre #link(<C>)[a propriedade C], escapamos para $E_("out")$.
-    + Caso ache um $x$:
-      - Sobreescreveremos o $x$ na fita com $x_x$ e seguimos para o passo 3.
-  ]
 
-+ Rebobina pro início da fita;
-+ Avança pela fita buscando uma letra $y$ tal que $y in.not {x, x_x}$;
-  #block[
-    #set enum(numbering: "a)")
-    + Caso não encontre:
-      - _x_ cumpre com a #link(<C>)[a propriedade C] e para no estado final $F_x$ e cessamos computação.
-    + Caso encontre:
-      - Sobreescreveremos o _y_ na fita com $y_x$ e seguimos para o passo 4.
-  ]
-
-+ Retornamos ao início da fita e voltamos ao passo 1.
+#align(center)[
+  #set text(size: 9pt)
+  #diagram(
+    node-stroke: .1em,
+    {
+              let (a, b, c) = (
+                (-0.5, 0),
+                (0.5, 0),
+                (4.0, 0),
+              )
+              edge(a, b, "=>", label: "Início")
+              node(b, align(center)[$E_1$], shape: circle)
+              edge(b, "-|>", bend: -130deg, loop-angle: 270deg, dash: "dotted")[
+                $\*,\* bar "E"$
+              ]
+              edge(b, "-|>", c, dash: "dotted")[<,<|D]
+              node(c, align(center)[$E_2$], shape: circle)
+    }
+  )
 ]
 
-Vamos para a prova de que o algoritmo descrito verifica #link(<C>)[C].
+#enum.item(2)[Avança pela fita passando por todos _y_ e $x_x$ até encontrar um $x$ ou o fim da fita.]
+#align(center)[
+  #set text(size: 9pt)
+  #diagram(
+    node-stroke: .1em,
+    {
+            let (c, d, e, f, g) = (
+              (4.0, 0),
+              (0.5, 4),
+              (4.0, 2),
+              (4.0, 4),
+              (6.5, 0)
+            )
+            let format = circle
+            let row_y = 1
+            node(c, align(center)[$E_2$], shape: format)
+            edge(c, "-|>", c, bend: -130deg, loop-angle: 260deg, dash: "dotted")[
+              $*_\x,*_\x bar "D"\
+              y,y bar "D"$
+            ]
+            edge(c, e, "-|>", label-side: left, dash: "dotted")[
+              $x, x_x bar "E"$
+            ]
+            node(e, align(center)[$E_4$], shape: format)
+            node(g, align(center)[$E_"out"$], shape: format)
+            edge(c, "-|>", g, dash: "dotted")[$epsilon, epsilon bar D$]
+    }
+  )
+]
+#block[
+  #set enum(numbering: "a)")
+  + Caso ache um $x$, o sobreescreveremos por $x_x$ e seguimos para o passo 3.
+  + Caso não ache um $x$, entendemos que x não cumpre #link(<C>)[a propriedade C] e escapamos para $E_("out")$.
+]
 
-Tomamos por certeza a eventual parada, em razão da palavra de entrada ser finita e que para que cesse o processamento é necessário e suficiente que sejam esgotados elementos:
-- Distintos de $x$ e $x_x$, ou
-- Idênticos à $x$
+#enum.item(3)[Rebobina pro início da fita;]
+#align(center)[
+  #set text(size: 9pt)
+  #diagram(
+    node-stroke: .1em,
+    {
+            let (a, b, c, d, e, f, g) = (
+              (-0.5, 0),
+              (0.5, 0),
+              (4.0, 0),
+              (0.5, 4),
+              (4.0, 2),
+              (4.0, 4),
+              (6.5, 0)
+            )
+            node(e, align(center)[$E_4$], shape: circle)
+            edge(e, "-|>", e, bend: -130deg, loop-angle: 170deg, dash: "dotted")[
+              $\*,\* bar "E"$
+            ]
+            edge(e, f, "-|>", label-side: left, dash: "dotted")[
+              $<, < bar "D"$
+            ]
+            node(f, align(center)[$E_5$], shape: circle)
+    }
+  )
+]
 
-Sempre que encontramos um elemento que satisfaça uma dessas condições, o consumimos, substituindo-o segundo a regra $x -> x_x$, então retornamos ao início da fita e buscamos novamente. Essa marcação tem como finalidade garantir que não reprocessaremos uma letra já consumida. Dessa forma temos a certeza de que a máquina pára para qualquer _string_ de $Sigma^*$.
 
-Vamos agora para demonstração de como esse processo também computa a validade de #link(<C>)[C] para _x_.
+#enum.item(4)[Avança pela fita buscando uma $y$ onde $y in.not {x, x_x}$;]
+#align(center)[
+  #set text(size: 9pt)
+  #diagram(
+    node-stroke: .1em,
+    {
+            let (a, b, c, d, e, f, g) = (
+              (-0.5, 0),
+              (0.5, 0),
+              (4.0, 0),
+              (0.5, 4),
+              (4.0, 2),
+              (4.0, 4),
+              (6.5, 0)
+            )
+            node(b, align(center)[$E_1$], shape: circle)
+            node(f, align(center)[$E_5$], shape: circle)
+            node(d, align(center)[$F_x$], shape: circle, extrude: (0, -2))
+            edge(f, "-|>", f, bend: -130deg, loop-angle: 170deg, dash: "dotted")[
+              #grid(
+                columns: (auto),
+                align: (right),
+                row-gutter: 7pt,
+                rows: 2,
+                [$x,x bar "D"$],
+                [$\*_x,\*_x bar "D"$]
+              )
+            ]
+            edge(f, b, "-|>", label-side: left, dash: "dotted")[$y,y_x bar "E"$]
+            edge(f, d, "-|>", dash: "dotted")[$lambda,lambda bar "I"$]
+    }
+  )
+]
+  #block[
+    #set enum(numbering: "a)")
+    + Caso não encontre, _x_ cumpre com a #link(<C>)[a propriedade C], pára no estado final $F_x$ e cessamos computação.
+    + Caso encontre, sobreescreveremos o _y_ na fita com $y_x$ e retornamos ao passo 1.
+  ]
+]
 
-Formalizando os objetos relevantes para a prova temos
+Vamos para a análise da complexidade temporal, obtida a partir das transições relevantes a cada passo.
 
-$ n,i in bb(N) | x, phi_n in {a, b, c} | w "é uma palavra." | w = phi_0 * ... * phi_n $
+Consideraramos, por convenção, o pior caso.
 
-Conforme a execução da máquina, o módulo $psi$ formará dois conjuntos.
-A instrução a) do passo 2 compõe $X$:
-$ X &= {i bar forall phi_i in w | phi_i = x_x } $
-E a) do passo 4 constroe $overline(X)$:
-$ overline(X) &= {i | forall y in Sigma and y != x | phi_i = y_x } $
+Dado que o algoritmo descrito repete-se para cada elemento cujo pareamento deve ser identificado, o pior caso é aquele que força o maior número possível de iterações, ou seja, o empate, onde:
+$ gamma_x = gamma_y + gamma_z $
 
-Basta que verifiquemos:
-$ |X| > |overline(X)| $
-
-// Basta que verifiquemos:
-// $ |X| > |overline(X)| $
-
-// Ele terá por objetivo verificar se #link(<C>)[a propriedade C] vale para uma letra do alfabeto.
-//
-// $ x, y, z in {a, b, c} "sendo" x != y and y != z and x != z \
-// "Tal que" #propriedade_i $
 
 #pagebreak()
 
