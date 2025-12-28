@@ -1,118 +1,6 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
-#import "introduction.typ": *
+#import "../intro/intro.typ": *
 #import fletcher.shapes: house, diamond, circle
-
-= Máquinas de Turing
-Com objetivo de tratar da complexidade do problema de maneira didática, facilitando nossa argumentação, além de simplificar o processo de desenvolvimento da máquina abstrata, vamos segmentar porções de MT's (Máquinas de Turing) em 'módulos'.
-
-Dada a definição de uma MT:
-$ "MT" = (E, Sigma, Γ, delta, i, F) $
-$E$: Conjunto finito de estados \
-$Sigma$: Alfabeto de entrada \
-$Γ$: Alfabeto da fita \
-$delta$: Funções de transição \
-$i$: Estado inicial \
-$F$: Conjunto de estados finais
-
-Obtermos um módulo $MM$ de MT tal que:
-$ MM = (E_xi, Sigma, Γ, delta_xi, e_("in"), E_("out")) $
-Onde, \
-$E_xi$: Subconjunto de $E$. \
-$delta_xi$: Subconjunto de $delta$ que atuem somente sobre os estados definidos em $E_xi$. \
-$e_("in")$: Um estado eleito de $E_xi$, denota o ínicio do módulo. Vamos nos referir a ele como estado de entrada. \
-$e_("out")$: Um conjunto de estados finais pertencentes a $E_xi$, representam o fim da computação do módulo. Chamaremos eles de estados de saída. \
-
-Importante notar que não necessariamente $e_("out") subset F$. Ou seja, o fim da computação de $MM$ não é necessário e suficiente para parada da MT.
-
-No decorrer desse texto também usaremos o termo "submódulo". Essa estrutura é análoga à um módulo e sua definição é construída em função de um módulo $MM$ ao invês da MT por inteiro. Essa abstração também tem finalidades puramente organizacionais.
-
-#pagebreak()
-
-#let mt1 = $"MT"_1$
-== Máquina de uma única fita (#mt1)
-Nossa máquina de uma fita só, ou #mt1, é definida como:
-
-$ "MT"_1 = (E, Sigma, Γ, delta, i, F) $
-Tal que, \
-$Sigma = {a, b, c}$ \
-$Γ = {x_y | forall x,y in Sigma} union {epsilon, <}, " ou seja" {a, b, c, a_a, a_b, a_c, b_a, b_b, b_c, c_a, c_b, c_c, <, epsilon }$ \
-$F = {F_a, F_b, F_c}$
-
-$<$ é o símbolo delimitador do início da fita. Tratamos a fita como infinita a direita.
-
-$epsilon$ representa o vazio que preenche os espaços à direita da palavra inserida.
-
-Cada estado final representa a decisão de conceder prioridade a uma avenida no cruzamento, onde:
-$ x in Sigma bar F_x: "Sinaleira prioriza avenida x" $
-
-As transições $delta$, estados $E$, $F$ e $i$ serão definidos em representações gráficas mais a frente.
-
-#mt1 tem dois módulos principais: $alpha$ e $beta$ os quais serão estabelecidos e destrinchados a seguir.
-
-=== Módulos e submódulos
-O módulo $alpha$ será responsável por verificar se a #link(<1>)[condição 1] do enunciado vale para alguma letra de $Sigma$ através do #target_1.
-
-Caso nenhum estado final seja alcançado dentro de $alpha$, o automômato recorrerá ao módulo $beta$, onde avaliará a regra de desempate definida na #link(<2>)[condição 2] do problema. Verificando qual símbolo tem a maior cardinalidade na entrada.
-
-A macroarquitetura da máquina tem o formato:
-
-#figure(
-  caption: "Arquitetura do automômato",
-  kind: "fluxograma",
-  supplement: [Fluxograma]
-)[
-  #align(center, [
-    #diagram(
-      node-stroke: 1pt, {
-        let (a, b, c) = ((-0.5, 0), (0.5, 0), (3.5, 0))
-
-        node(a, [])
-        node(b, align(center)[Módulo $alpha$], shape: house)
-        node(c, align(center)[Módulo $beta$], shape: house)
-
-        edge(a, b, "-|>", label: text(size: 8pt)[Início])
-
-        edge(
-          b, c, "-|>",
-          label: [#align(center, [#text(size: 10pt)[Se o módulo $alpha$\ não parar]])]
-        )
-
-
-        let row_y = 2
-        let xA = 0.5
-        let ext = (0, -2)
-
-        let bA = (xA - 1, row_y)
-        let bB = (xA,     row_y)
-        let bC = (xA + 1, row_y)
-
-        node(bA, align(center)[$F_a$], extrude: ext)
-        node(bB, align(center)[$F_b$], extrude: ext)
-        node(bC, align(center)[$F_c$], extrude: ext)
-
-        edge(b, bA, "-|>")
-        edge(b, bB, "-|>")
-        edge(b, bC, "-|>")
-
-        let xB = 3.5
-
-        let cA = (xB - 1, row_y)
-        let cB = (xB,     row_y)
-        let cC = (xB + 1, row_y)
-
-        node(cA, align(center)[$F_a$], extrude: ext)
-        node(cB, align(center)[$F_b$], extrude: ext)
-        node(cC, align(center)[$F_c$], extrude: ext)
-
-        edge(c, cA, "-|>")
-        edge(c, cB, "-|>")
-        edge(c, cC, "-|>")
-      }
-    )
-  ])
-]
-
-#pagebreak()
 
 === Módulo $alpha$
 O módulo $alpha$ irá analisar se o #target_1 vale para alguma letra em ${a,b,c}$. Caso verifique validade de tal propriedade para a letra-alvo, é eleito o estado final apropriado representativo da decisão apropriada e a computação cessa.
@@ -241,7 +129,14 @@ Fixo que $x, y in Sigma$ onde $x != y$, o submódulo $psi(x)$ terá o formato:
             edge(c, "-|>", g)[$epsilon, epsilon bar D$]
             node(d, align(center)[$F_x$], shape: format, extrude: (0, -2))
             edge(c, e, "-|>", label-side: left)[
-              $x, x_x bar "E"$
+              #grid(
+                columns: (auto),
+                align: (right),
+                row-gutter: 7pt,
+                rows: 2,
+                [$x, x_x bar "E"$],
+                [$x_y, x_x bar "E"$]
+              )
             ]
             edge(e, "-|>", e, bend: -130deg, loop-angle: 170deg)[
               $\*,\* bar "E"$
@@ -341,7 +236,7 @@ Vamos então destrinchar cada estado da máquina e suas transições associadas 
 ]
 #block[
   #set enum(numbering: "a)")
-  + Caso ache um $x$, o sobreescreveremos por $x_x$ e seguimos para o passo 3.
+  + Caso ache um $x$ ou $x_y$, o sobreescreveremos por $x_x$ e seguimos para o passo 3.
   + Caso não ache um $x$, escapamos para $E_("out")$.
 ]
 
@@ -415,48 +310,55 @@ Vamos então destrinchar cada estado da máquina e suas transições associadas 
 ]
 
 
-TODO PROVA DA CORRETUDE DA CORRESPONDENCIA ENTRE A MAQUINA E O ARGUMETNO DESEJADO
+Um aspecto relevante é que esse módulo é um _loop_ com duas interrupções possíveis: as etapas 2.b) e 4.a) do passo-a-passo.
 
-FAZER PROVAS DAS CORRESPONDENCIAS ENTRE OS ESTADOS DE PARADA/SAIDA E AS PROPRIEDADES DESEJADAS.
+Agora faremos uma breve verificação formal de que o algoritmo abstraído na máquina constrói as propriedades almejadas.
 
-2.B) SIGNIFICA NÃO CUMPRIMENTO DE DELTA
+Dado que,
+$ 𝑛, 𝑖 in N $
+$ 𝑥, k_n in {𝑎, 𝑏, 𝑐} $
+$ 𝑤 = k_0 ∗ … ∗ k_n $
 
-SERIA ALGO COMO
+Os passos 2.a) e 4.b) marcam os elementos de forma $x_x$ e $y_x$, respectivamente, construindo os conjuntos:
+$ X_w = { j | forall j in N  "tal que" 0 <= j <= n " e" k_j = x } $
+$ overline(X)_w = { j | forall j in N  "tal que" 0 <= j <= n " e" k_j != x } $
 
-- TEMOS DOIS CASOS, UM ONDE JÁ MARCAMOS ALGUM X E OUTRO ONDE NÃO MARCAMOS NENHUM
+Como é feita uma substituição de elemento por vez, os conjuntos são proceduralmente compostos em paralelo. Dessa forma, independente da iteração do loop, em 2.a), $|X_w|$ = $|overline(X)_w| + 1$. Até que em 4.b), é encontrado mais um $y$ e $|X_w| = |overline(X)_w|$.
 
-- CASO JA TENHAMOS MARCADO NUMA ITERAÇÂO ANTERIOR DO LOOP, JÁ MARCAMOS UM DIFERENTE DE X, ENTÃO PELO MENOS YZ = X, JÁ QUE NÃO TEMOS MAIS X
-- CASO SEJA A PRIMEIRA ITERAÇÃO, NÃO TEM X NA PALAVRA, ENTÃO, POR OBVIO, YZ >= X
+Somente em uma das interrupções, 2.b) ou 4.a), ocorre um disruptura dessas igualdades.
 
-4.A) SIGNIFICA CUMPRIMENTO DE DELTA
+Em 2.b), não encontramos mais $x$ e escapamos para $E_"out"$, como interrompemos o processamento do módulo, não verificamos se existem mais $y$, mas temos certeza da cardinalidade de $x$. Obtendo $|overline(X)_w| = |X_w|$ e, portanto, $gamma(x)_w = gamma(y)_w + gamma(z)_w$, entretanto, como não não buscamos mais $y$, podemos afirmar de maneira mais forte que $gamma(x)_w <= gamma(y)_w + gamma(z)_w$.
 
-#pagebreak()
-
-Vamos para a análise da complexidade temporal, obtida a partir das transições relevantes a cada passo.
-
-Por convenção, vamos assumir o pior caso, para tal, temos de primeiro determinar qual o formato da pior entrada possível.
-
-Para uma entrada computável, $psi(x)$ tem dois possíveis cenários, o de parada ao alcançar o estado $F_x$ e fuga para $E_"out"$, escapando para outro $psi$ ou ao módulo $beta$.
-
-#set enum(numbering: (i) => "Caso " + str(i) + " -")
-+ Parada em $F_x$
-Conforme estabelecemos previamente, $F_x$ significa
-
-No passo 1, a máquina irá avançar até encontrar um $x$, como a busca pelo símbolo é linear, o custo dessa etapa escala conforme a distância do $x$ do início da palavra. Dessa forma, o pior caso é do $x$ estando mais ao fim possível na fita.
-
-+ Escape para $E_"out"$
-pipipopo
-
-// Dado que o algoritmo descrito repete-se para cada elemento cujo pareamento deve ser identificado, o pior caso é aquele que força o maior número possível de iterações, ou seja, o empate, onde:
-// $ gamma_x = gamma_y + gamma_z $
-
+Já na parada em 4.a), temos do passo 2.a) que $|X_w|$ = $|overline(X)_w| + 1$ e interrompemos o processamento em $F_x$. Neste caso, $gamma(x)_w >= gamma(y)_w + gamma(z)_w + 1$, o que equivale a $gamma(x)_w > gamma(y)_w + gamma(z)_w$. Neste caso, computamos com sucesso que vale a propriedade $Delta$ no momento da parada em $F_x$.
 
 #pagebreak()
 
+Vamos agora para a análise da complexidade temporal. Vamos abstrair um custo de 1#emph[u.a.] (unidade arbitrária) por transição efetuada.
 
-== Máquina na íntegra
-ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
-== Análise de complexidade
-ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
-== Exemplos
-ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
+Por convenção, vamos calcular somente o custo associado ao pior caso. Vamos considerar os dois possíveis casos de parada e estabelecer a pior estrutura possível para uma palavra na dada etapa.
+
+Como definimos previamente,
+$ "Parar em" F_x <=> #propriedade_i $
+e,
+$ "Saída para" E_"out" <=> gamma(x)_w <= gamma(y)_w + gamma(z)_w $
+
+Dada uma entrada computável, $psi(x)$ tem dois possíveis cenários, o de parada ao alcançar $F_x$ e fuga para $E_"out"$.
+
+- Parada em $F_x$
+
+Importante notar que o único ponto de interrupção do _loop_ é em 4.b), assim teremos $j$ repetições, onde $j = gamma_(y)_w + gamma_(z)_w$.
+
+-- Passo 1: O custo de rebobinar ao início da fita é igual a distância da posição atual dela até ao delimitador à esquerda. Dessa forma, uma palavra de formato $w = 
+
+-- Passo 2: Temos por hipótese que $gamma(x)_w > gamma(y)_w + gamma(z)_w$, dessa forma caímos em 2.a). Como percorremos símbolo a símbolo até encontrarmos o próximo $x$,
+o pior formato para $w$ é aquele com todos os $x$'s como sufixo, $w = (y*z)^k * x^j$, forçando em qualquer iteração do _loop_ pelo menos um custo $k$.
+
+Um outro ponto a se considerar, é que como o único ponto de interrupção do _loop_ é em 4.b), teremos $gamma_(y)_w + gamma_(z)_w$ repetições. E conforme marcamos os $x$ em $x_x$, na iteração $i$, a palavra assume o formato
+
+$ w = (y_x*z_x)^i * (y*z)^(k-i) * x_x^i * x^(j-i) $
+
+Dessa forma, definimos de maneira exata o custo em uma iteração qualquer como $quad$ $k + i + 1$.
+
+- Saída para $E_"out"$
+
+#pagebreak()

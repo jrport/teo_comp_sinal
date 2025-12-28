@@ -5,7 +5,7 @@ Vou provar que a máquina verifica corretamente qual símbolo tem maior ocorrên
 ## Definições Iniciais
 
 Dados:
-- 𝑛, 𝑖 ∈ ℕ 
+- 𝑛, 𝑖 ∈ ℕ
 - 𝑥, 𝜑ₙ ∈ {𝑎, 𝑏, 𝑐}
 - 𝑤 = 𝜑₀ ∗ … ∗ 𝜑ₙ (palavra de entrada)
 

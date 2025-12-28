@@ -7,7 +7,7 @@
 #set heading(numbering: "1.")
 #set page(
   margin: 1in,
-  footer: none,
+  numbering: "1",
 )
 #set text(
   font: "New Computer Modern",
@@ -48,9 +48,9 @@
 #pagebreak()
 #outline(title: "Índice")
 
-#include "sections/introduction.typ"
-
-#include "sections/mt1.typ"
+#include "sections/intro/intro.typ"
+#include "sections/intro/about_mt.typ"
+#include "sections/mt1/main.typ"
 
 = Máquina de múltiplas fitas
 == Módulos
