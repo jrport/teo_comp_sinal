@@ -1,6 +1,8 @@
-#include "intro.typ"
 #pagebreak()
 #include "modulo_alfa.typ"
+#pagebreak()
+// #include "analise_temporal.typ"
+#pagebreak()
 
 == Máquina na íntegra
 ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis

@@ -9,6 +9,9 @@
   margin: 1in,
   numbering: "1",
 )
+#set par(
+  justify: true,
+)
 #set text(
   font: "New Computer Modern",
   size: 12pt,

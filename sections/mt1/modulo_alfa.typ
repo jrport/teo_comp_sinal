@@ -176,7 +176,7 @@ $ "Sair por" E_"out" <=> gamma_(x)(w) <= gamma_(y)(w) + gamma_(z)(w) $
 
 #pagebreak()
 
-Vamos então destrinchar cada estado da máquina e suas transições associadas para verificar a computação dessas propriedades e também calcular a complexidade assintôtica apresentada.
+Vamos então destrinchar cada estado da máquina e suas transições associadas para verificar a computação das propriedades desejadas e futuramente computar a complexidade.
 
 #block[
   #set enum(numbering: (i) => "Passo " + str(i) + " -")
@@ -331,34 +331,3 @@ Em 2.b), não encontramos mais $x$ e escapamos para $E_"out"$, como interrompemo
 
 Já na parada em 4.a), temos do passo 2.a) que $|X_w|$ = $|overline(X)_w| + 1$ e interrompemos o processamento em $F_x$. Neste caso, $gamma(x)_w >= gamma(y)_w + gamma(z)_w + 1$, o que equivale a $gamma(x)_w > gamma(y)_w + gamma(z)_w$. Neste caso, computamos com sucesso que vale a propriedade $Delta$ no momento da parada em $F_x$.
 
-#pagebreak()
-
-Vamos agora para a análise da complexidade temporal. Vamos abstrair um custo de 1#emph[u.a.] (unidade arbitrária) por transição efetuada.
-
-Por convenção, vamos calcular somente o custo associado ao pior caso. Vamos considerar os dois possíveis casos de parada e estabelecer a pior estrutura possível para uma palavra na dada etapa.
-
-Como definimos previamente,
-$ "Parar em" F_x <=> #propriedade_i $
-e,
-$ "Saída para" E_"out" <=> gamma(x)_w <= gamma(y)_w + gamma(z)_w $
-
-Dada uma entrada computável, $psi(x)$ tem dois possíveis cenários, o de parada ao alcançar $F_x$ e fuga para $E_"out"$.
-
-- Parada em $F_x$
-
-Importante notar que o único ponto de interrupção do _loop_ é em 4.b), assim teremos $j$ repetições, onde $j = gamma_(y)_w + gamma_(z)_w$.
-
--- Passo 1: O custo de rebobinar ao início da fita é igual a distância da posição atual dela até ao delimitador à esquerda. Dessa forma, uma palavra de formato $w = 
-
--- Passo 2: Temos por hipótese que $gamma(x)_w > gamma(y)_w + gamma(z)_w$, dessa forma caímos em 2.a). Como percorremos símbolo a símbolo até encontrarmos o próximo $x$,
-o pior formato para $w$ é aquele com todos os $x$'s como sufixo, $w = (y*z)^k * x^j$, forçando em qualquer iteração do _loop_ pelo menos um custo $k$.
-
-Um outro ponto a se considerar, é que como o único ponto de interrupção do _loop_ é em 4.b), teremos $gamma_(y)_w + gamma_(z)_w$ repetições. E conforme marcamos os $x$ em $x_x$, na iteração $i$, a palavra assume o formato
-
-$ w = (y_x*z_x)^i * (y*z)^(k-i) * x_x^i * x^(j-i) $
-
-Dessa forma, definimos de maneira exata o custo em uma iteração qualquer como $quad$ $k + i + 1$.
-
-- Saída para $E_"out"$
-
-#pagebreak()
