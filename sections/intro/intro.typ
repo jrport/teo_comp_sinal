@@ -30,18 +30,22 @@ $ phi_k in {a, b, c} "tal que" 0 <= k <= n $
 
 Nesta representação, cada carro na avenida A será uma letra 'a', na avenida B, a letra 'b', e na C, 'c'.
 
-Será útil também a definição de uma função para cálculo da cardinalidade de uma letra, construída segundo o descrito abaixo:
+Uma outra definição útil é a do conjunto de ocorrências de um conjunto de símbolos ou de um único símbolo (sendo esse o caso do conjunto unário).
+
+$ "Seja" w "uma palavra," x "uma letra e" X = {x} $
+$ X_w "é o conjunto de ocorrências dos símbolos de" X "em" w $
+$ X_w = { j | forall j in N  "tal que" 0 <= j <= |w| " e" phi_j in X } $
+
+Será útil também a definição de uma função para cálculo da cardinalidade de uma letra, descrito como segue:
 
 $ "Seja" w "uma palavra e" x "uma letra" $
-$ gamma_(x)(w): {a, b, c}^* -> bb(N) $
-$ gamma_(x)(w) = |{i in {1, ..., |w|} and phi_i = x}| $
-
-Onde $gamma$ é a função de cardinalidade.
+$ gamma_(x)(w): {a, b, c} -> bb(N) $
+$ gamma_(x)(w) = |X_w| $
 
 De forma direta, $gamma_(x)(w)$ nos retorna o número de ocorrências da letra $x$ na palavra $w$.
 
-A partir do enunciado da questão, abstraímos duas propriedades que nosso automômato deve computar, as chamaremos de A e B.
-
+#pagebreak()
+Retornando ao enunciado da questão, vamos destrinchar os comandos escritos e abstrair duas propriedades relevantes.
 
 1. Determinar a avenida com quantidade de carros superior a metade do total de automóveis em todas avenidas. <1> \
   1.1 Ou seja, *determinar a letra $x$ cuja cardinalidade é superior ao tamanho total da string $w$ de entrada*:
@@ -50,7 +54,6 @@ A partir do enunciado da questão, abstraímos duas propriedades que nosso autom
   $ |w| = gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w) $
   $ "Portanto, " gamma_(x)(w) > (|w|)/2 <=> gamma_(x)(w) > (gamma_(a)(w) + gamma_(b)(w) + gamma_(c)(w))/2 $
   1.2 Caso mais de uma avenida se qualifique, devemos respeitar a A sobre B, B sobre C e, por transitividade, A sobre C. <1.2>
-#pagebreak()
 2. Determinar a avenida com a maior quantidade de carros. <2> \
   2.1 Ou seja, *determinar a letra $x$ de maior cardinalidade na palavra $w$*:
   $ x, y, z in {a, b, c} and y != z and z != x and x != z \

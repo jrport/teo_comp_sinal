@@ -6,7 +6,7 @@
 = Máquinas de Turing
 Com objetivo de tratar da complexidade do problema de maneira didática, facilitando nossa argumentação, além de simplificar o processo de desenvolvimento da máquina abstrata, vamos segmentar porções de MT's (Máquinas de Turing) em 'módulos'.
 
-Dada a definição de uma MT:
+Definida MT como:
 $ "MT" = (E, Sigma, Γ, delta, i, F) $
 $E$: Conjunto finito de estados \
 $Sigma$: Alfabeto de entrada \
@@ -15,7 +15,7 @@ $delta$: Funções de transição \
 $i$: Estado inicial \
 $F$: Conjunto de estados finais
 
-Definimos um módulo $MM$ de MT como:
+O módulo $MM$ de MT é:
 $ MM = (E_xi, Sigma, Γ, delta_xi, e_("in"), E_("out")) $
 Onde, \
 $E_xi$: Subconjunto de estados em $E$. \
@@ -36,7 +36,7 @@ Nossa máquina de uma fita só, ou #mt1, é definida como:
 $ "MT"_1 = (E, Sigma, Γ, delta, i, F) $
 Tal que, \
 $Sigma = {a, b, c}$ \
-$Γ = {x_y | forall x,y in Sigma} union {epsilon, <}, " ou seja" {a, b, c, a_a, a_b, a_c, b_a, b_b, b_c, c_a, c_b, c_c, <, epsilon }$ \
+$Gamma = {x_\# | forall x in Sigma} union {epsilon, <} union Sigma, " ou seja," {a, b, c, a_\#, b_\#, c_\#, <, epsilon }$ \
 $F = {F_a, F_b, F_c}$
 
 $<$ é o símbolo delimitador do início da fita. Tratamos a fita como infinita a direita.
@@ -44,7 +44,7 @@ $<$ é o símbolo delimitador do início da fita. Tratamos a fita como infinita 
 $epsilon$ representa o vazio que preenche os espaços à direita da palavra inserida.
 
 Cada estado final representa a decisão de conceder prioridade a uma avenida no cruzamento, onde:
-$ x in Sigma bar F_x: "Sinaleira prioriza avenida x" $
+$ "Sendo" x in Sigma bar F_x: "Decisão de priorizar a avenida" x $
 
 As transições $delta$, estados $E$, $F$ e $i$ serão definidos em representações gráficas mais a frente.
 
@@ -55,7 +55,7 @@ O módulo $alpha$ será responsável por verificar se a #link(<1>)[condição 1]
 
 Caso nenhum estado final seja alcançado dentro de $alpha$, o automômato recorrerá ao módulo $beta$, onde avaliará a regra de desempate definida na #link(<2>)[condição 2] do problema. Verificando qual símbolo tem a maior cardinalidade na entrada.
 
-A macroarquitetura da máquina tem o formato:
+A macroarquitetura da máquina assume o formato:
 
 #figure(
   caption: "Arquitetura do automômato",

@@ -51,8 +51,7 @@
 #pagebreak()
 #outline(title: "Índice")
 
-#include "sections/intro/intro.typ"
-#include "sections/intro/about_mt.typ"
+#include "sections/intro/main.typ"
 #include "sections/mt1/main.typ"
 
 = Máquina de múltiplas fitas
