@@ -250,15 +250,17 @@ $ 𝑛, 𝑖 in N $
 $ 𝑥, k_n in {𝑎, 𝑏, 𝑐} $
 $ 𝑤 = k_0 ∗ … ∗ k_n $
 
-Os passos 2.a) e 4.b) marcam os elementos de forma $x_x$ e $y_x$, respectivamente, construindo os conjuntos:
-$ X_w = { j | forall j in N  "tal que" 0 <= j <= n " e" k_j = x } $
-$ overline(X)_w = { j | forall j in N  "tal que" 0 <= j <= n " e" k_j != x } $
+Os passos 2.a) e 4.b) marcam os elementos substituindo-os por $x_\#$ e $y_\#$, respectivamente construindo:
+$ X_w = { j | forall j in N  "tal que" 0 <= j <= n " e" k_j = x } "(Ocorrências de X)" $
+$ overline(X)_w = { j | forall j in N  "tal que" 0 <= j <= n " e" k_j != x } "(Ocorrências de não-X)" $
 
-Como é feita uma única substituição de elemento por vez, os conjuntos são proceduralmente compostos em paralelo. Dessa forma, independente da iteração do loop, em 2.a), $|X_w|$ = $|overline(X)_w| + 1$. Até que em 4.b), é encontrado mais um $y$ e $|X_w| = |overline(X)_w|$.
+Como fazemos uma substituição 2.a), rebobinamos, fazemos uma substituição em 4.b) e reiniciamos o loop. Estamos sempre compondo $X$ e $overline(X)$, um por um, mantendo igualdade quanto a cardinalidade dos conjuntos. Incrementando primeiro $X$ e então $overline(X)$.
 
-Somente em uma das interrupções, 2.b) ou 4.a), ocorre um disruptura dessas igualdades.
+Dessa forma, independente da iteração do loop, no instante precedendo a execução do passo 2.a), temos que $|X_w|$ = $|overline(X)_w| + 1$. 
+Até que executarmos 4.b), retornando a igualdade $|X_w| = |overline(X)_w|$.
 
-Em 2.b), não encontramos mais $x$ e escapamos para $E_"out"$, como interrompemos o processamento do módulo, não verificamos se existem mais $y$, mas temos certeza da cardinalidade de $x$. Obtendo $|overline(X)_w| = |X_w|$ e, portanto, $gamma(x)_w = gamma(y)_w + gamma(z)_w$, entretanto, como não não buscamos mais $y$, podemos afirmar de maneira mais forte que $gamma(x)_w <= gamma(y)_w + gamma(z)_w$.
+Ou seja, somente nos pontos de interrupção do loop ocorre disruptura permanente dessas igualdades.
 
-Já na parada em 4.a), temos do passo 2.a) que $|X_w|$ = $|overline(X)_w| + 1$ e interrompemos o processamento em $F_x$. Neste caso, $gamma(x)_w >= gamma(y)_w + gamma(z)_w + 1$, o que equivale a $gamma(x)_w > gamma(y)_w + gamma(z)_w$. Neste caso, computamos com sucesso que vale a propriedade $Delta$ no momento da parada em $F_x$.
+Em 2.b), não encontramos mais $x$ e escapamos para $E_<=$, como interrompemos o processamento do módulo, não buscamos mais $y$, mas temos certeza da cardinalidade de $x$, naquele instante alcançamos que $|X| = |overline(X)$. Entretanto, como não não buscamos mais $y$, podemos afirmar de maneira forte que $gamma(x)_w <= gamma(y)_w + gamma(z)_w$ visto que podem ainda haver mais ocorrências de $y$.
 
+Já na parada em 4.a), temos do passo 2.a) que $|X_w|$ = $|overline(X)_w| + 1$ e interrompemos o processamento em $E_>$. Neste caso, $gamma(x)_w >= gamma(y)_w + 1$, o que equivale a $gamma(x)_w > gamma(y)_w$.

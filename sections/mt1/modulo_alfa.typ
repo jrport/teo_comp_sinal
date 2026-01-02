@@ -1,6 +1,5 @@
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 #import "../intro/intro.typ": *
-#import fletcher.shapes: house, diamond, circle
 
 === Módulo $alpha$
 O módulo $alpha$ irá analisar se o #target_1 vale para alguma letra em ${a,b,c}$. Caso verifique validade de tal propriedade para a letra-alvo, é eleito o estado final apropriado representativo da decisão apropriada e a computação cessa.
@@ -11,13 +10,13 @@ Portanto, efetuamos essa avaliação para as letra na ordem "a", "b" e, então, 
 
 Caso nenhuma letra do alfabeto cumpra com a propriedade alvo de $alpha$, a computação é encaminhada para o módulo $beta$.
 
-Quebramos cada avaliação de uma letra em um submódulo $psi$, tal que:
-$ psi(x): "Verifica se x cumpre a propriedade "Delta", caso positivo, o automômato pára em" F_x. $
+Vamos então quebrar o processamento em 3 instâncias de submódulos $psi$, tratando os estados $E_>$ como a decisão de concessão de prioridade para a letra.
 
 Dando ao interior de $alpha$ o formato:
 
+#import fletcher.shapes: house, diamond, circle, trapezium, bracket
 #figure(
-  caption: $"Formato do Módulo" alpha$,
+  caption: $"Raio-x do módulo" alpha$,
   kind: "fluxograma",
   supplement: [Fluxograma]
 )[
@@ -31,12 +30,12 @@ Dando ao interior de $alpha$ o formato:
           (4.5, 0),
           (6.5, 0),
         )
-        let format = diamond.with(fit: 0.3)
+        let format = trapezium.with(fit: 0.4)
         let row_y = 1
         node(a, [])
-        node(b, align(center)[$psi(a)$], shape: format)
-        node(c, align(center)[$psi(b)$], shape: format)
-        node(d, align(center)[$psi(c)$], shape: format)
+        node(b, align(center)[$psi(a, {b, c})$], shape: format)
+        node(c, align(center)[$psi(b, {a, c})$], shape: format)
+        node(d, align(center)[$psi(c, {a, b})$], shape: format)
         node(e, align(center)[Módulo $beta$], shape: house)
         edge(a, b, "-|>", label: text(size: 8pt)[Início])
         edge(b, c, "-|>", label: text(size: 8pt)[_a_ não cumpre $Delta$])
@@ -44,32 +43,14 @@ Dando ao interior de $alpha$ o formato:
         edge(d, e, "-|>", label: text(size: 8pt)[_c_ não cumpre $Delta$])
 
         let ext = (0, -2)
-        node((0.5, row_y), align(center)[$F_a$], shape: circle, extrude: ext)
-        node((2.5, row_y), align(center)[$F_b$], shape: circle, extrude: ext)
-        node((4.5, row_y), align(center)[$F_c$], shape: circle, extrude: ext)
+        node((0.5, row_y), align(center)[$F_a$], shape: circle, extrude: ext, name: <F_A>)
+        node((2.5, row_y), align(center)[$F_b$], shape: circle, extrude: ext, name: <F_B>)
+        node((4.5, row_y), align(center)[$F_c$], shape: circle, extrude: ext, name: <F_C>)
         edge(b, (0.5, row_y), "-|>", label: text(size: 8pt)[$psi(a) "parou"$], label-side: right)
         edge(c, (2.5, row_y), "-|>", label: text(size: 8pt)[$psi(b) "parou"$])
         edge(d, (4.5, row_y), "-|>", label: text(size: 8pt)[$psi(c) "parou"$])
+        node(enclose: (<F_A>, <F_C>), shape: bracket.with(dir: bottom, length: 110%, size: 2em, sep: 5pt, label: $alpha$))
       }
     )
   ])
 ]
-
-#pagebreak()
-=== Submódulo $psi$
-
-Como já definimos, $psi$ deve verificar se vale para algum $x$:
-
-$ #propriedade_i "onde" x, y, z in {a, b, c} " e " x != y != z $
-
-Para tal, temos que comparar a *cardinalidade* de $x$ com a de $y$ e $z$.
-
-Assim, vamos utilizar da nossa função de contagem $psi(x, L)$, sendo $L = {y, z}$.
-
-Onde $E_>$ será agora $F_x$ simbolizando a parada total da MT1 na decisão de priorizar a avenida $x$.
-
-Enquanto $E_<=$ será:
-- $E_"in"$ do submódulo $psi$ seguinte, caso $x!=c$,;
-- o estado de entrada do módulo $beta$, caso $x=c$,;
-
-Dado a definição de $x$ e $L$, vamos agora para o cálculo da complexidade temporal associado a $alpha$.
