@@ -2,6 +2,8 @@
 #pagebreak()
 #include "analise_temporal.typ"
 #pagebreak()
+#include "alfa_na_integra.typ"
+#pagebreak()
 
 == Máquina na íntegra
 ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis

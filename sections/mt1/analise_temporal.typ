@@ -1,16 +1,14 @@
 #import "../intro/intro.typ": *
 
-=== Contagem no módulo $alpha$
+=== Do custo da contagem no módulo $alpha$
 
 $psi(x, {y, z})$ deve verificar se para um certo $x$ vale:
 
 $ #propriedade_i "onde" x, y, z in {a, b, c} " e " x != y != z $
 
-Para tal, vamos comparar a *cardinalidade* de $x$ com a de $y$ e $z$.
+Para tal, vamos comparar a *cardinalidade* de $x$ com a de $y$ e $z$. Com esse objetivo, utilizamos nossa função de comparação de cardinalidade $psi(x, L)$, sendo $L = {y, z}$.
 
-Para tal utilizamos nossa função de comparação de cardinalidade $psi(x, L)$, sendo $L = {y, z}$.
-
-Em $alpha$, substituimos o $E_>$ como $F_x$ simbolizando a parada total da MT1 na decisão de priorizar a avenida $x$. Uma vez que esse estado implica na condição $Delta$ desejada.
+Dentro do módulo, substituimos o $E_>$ por $F_x$ simbolizando a parada total da MT1 na decisão de priorizar a avenida $x$. Uma vez que esse estado implica na condição verdade de $Delta$ para o $x$ alvo.
 
 Enquanto $E_<=$ será:
 - $E_"in"$ do submódulo $psi$ seguinte, caso $x!=c$,;
@@ -18,7 +16,9 @@ Enquanto $E_<=$ será:
 
 Dado a definição de $x$ e $L$, vamos agora para o cálculo da complexidade temporal associado a $alpha$.
 
-Para isso, vamos destrinchar cada passo, determinando o pior formato possível da palavra para cada um deles. Comparar essas composições de $w$, calcular o custo associado e eleger o pior candidato.
+Por convenção, nos preocupamos nessa análise com o pior caso possível, com isso em mente temos de determinar qual seria a palavra de maior custo associado para que $alpha$ compute.
+
+Com esse fim, vamos destrinchar cada passo de $psi$, determinando o pior formato possível da palavra para cada um deles. Depois, comparar essas composições de $w$, calcular o custo associado e eleger o pior candidato entre eles.
 
 Trateremos por $i$, a iteração atual do passo-a-passo, visto que $psi$ opera como _loop_, iniciando nossa contagem em 1.
 
@@ -28,8 +28,7 @@ Trateremos por $i$, a iteração atual do passo-a-passo, visto que $psi$ opera c
     $w = x^k*y^j$,
     [
       A partir de i > 0, essa etapa rebobina a partir da posição do cabeçote determinada no passo 4.b).
-      Portanto aqui, $w = x^k*y^j$ é *um* pior caso válido (o relevante aqui é que todos os $y$ sejam sufixo de w).
-      Visto que força a maior distância do cabeçote ao início.
+      O pior caso então é o $y^j$ como sufixo da palavra, maximizando a quantidade de transições para rebobinar.
     ],
   ),
   (
@@ -143,12 +142,67 @@ O custo desse caso será $T^(B)_1 = 2(n/2)(n-1) = n(n-1) = n^2 - n$. O mesmo do 
 
 Ou seja, o custo computacional é o mesmo independente de qual caso de interrupção, e a pior composição possível para a palavra dado o formato $w = y^k + x^m$ é $k = m = (|w|)/2$.
 
-Acumulando o custo de $n^2 - n$, contido no conjunto $Theta(n^2)$.
+Outro fato importante que extraímos da análise da derivada, é de que a função é crescente a medida que os valores de $k$ e $m$ convergem.
 
-Em $T_2$, por simétria, a análise é idêntica.
+Por fim, determinamos o custo de um $psi$ em $alpha$ igual à $n^2 - n$.
 
-#pagebreak()
+Em $T_2$, por simétria, a análise é idêntica e o mesmo custo obtido.
 
-Entranto, queremos o pior caso dado toda a computação de $alpha$, assim é interessante maximizar o custo dentro da restrição de $x < y$. Em vista da análise exposta, sucede que o pior caso para o módulo por inteiro é $x = y - 1$ para $x in {a, b, c}$. Acumulando custo de:
+Determinamos a pior palavra para qualquer $psi$ em $alpha$ sendo:
+$ x, y, z in {a, b, c} $
+$ w = x^i dot y^i dot z^i $
 
+com qualquer permutação de $x$, $y$ e $z$.
 
+Obtendo custo total de $n^2 - n$, ou seja, contido no $Theta(n^2)$.
+
+=== O custo da limpeza
+Vamos fazer uma breve demonstração da complexidade da operação de limpeza, previamente definidas como:
+
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+#import fletcher.shapes: house, diamond, circle, trapezium, bracket, ellipse, brace
+#figure(
+  caption: "Estado de limpeza",
+  kind: "Máquina de Turing",
+  supplement: [Máquina de Turing]
+)[
+  #diagram(
+    node-stroke: 1pt, {
+      node((0, 0), align(center)[#grid(columns: (auto), rows: 2, row-gutter: 7pt, text(size: 9pt)[Estado], text(size: 9pt)[de limpeza])], shape: circle)
+      edge((0,0), (0,0), "-|>", bend: 130deg, loop-angle: 180deg, label: [
+        #grid(
+          columns: (auto),
+          align: (right),
+          row-gutter: 7pt,
+          rows: 4,
+          text(size: 10pt)[$a,a bar "D"$],
+          text(size: 10pt)[$b,b bar "D"$],
+          text(size: 10pt)[$c,c bar "D"$],
+          text(size: 10pt)[$\*_\#,* bar "D"$]
+      )
+      ])
+    }
+  )
+]
+
+O custo aqui é o da distância do ponto de entrada no _estado de limpeza_ ao fim da palavra de entrada, visto que iteramos por toda a palavra removendo os símbolos marcados.
+
+Como entramos nesse estado somente no caso de escape de $psi$ por $E_<=$ que sempre precede o posicionamento do cabeçote no início da fita. Ou seja, sempre será necessário traversar por toda a palavra nesse estado. Dessa forma, o custo aqui é de $n$, sendo $n = |w|$, o qual obviamente pertence a $Theta(n)$.
+
+=== Conclusão do custo de $alpha$
+Podemos finalmente estipular o custo acumulado de $alpha$. Dado que consideramos o pior caso como o de empate contínuo, teremos:
+#set enum(numbering: "1.")
+
+#let items = (
+  ("a", ("b", "c")),
+  ("b", ("a", "c")),
+  ("c", ("a", "c"))
+)
+
+#for (x, (y, z)) in items [
++ $psi(#x, {#y, #z})$: $n^2 - n$
++ Operação de limpeza: $n$
+]
+
+Totalizando,
+$ "Custo total de "alpha = 3((n^2 - n) + n) = 3n^2 $

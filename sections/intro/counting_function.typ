@@ -56,16 +56,7 @@ A título de demonstração, tratemos $L = {y}$, $psi(x, L)$ assume o formato:
             edge(b, "-|>", c)[<,<|D]
             edge(c, "-|>", g)[$epsilon, epsilon bar D$]
             node(d, align(center)[$E_>$], shape: format)
-            edge(c, e, "-|>", label-side: left)[
-              #grid(
-                columns: (auto),
-                align: (right),
-                row-gutter: 7pt,
-                rows: 2,
-                [$x, x_\# bar "E"$],
-                [$x_y, x_\# bar "E"$]
-              )
-            ]
+            edge(c, e, "-|>", label-side: left)[$x, x_\# bar "E"$]
             edge(e, "-|>", e, bend: -130deg, loop-angle: 170deg)[
               $\*,\* bar "E"$
             ]
