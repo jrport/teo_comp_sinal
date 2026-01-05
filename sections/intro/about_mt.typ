@@ -6,7 +6,7 @@
 = Máquinas de Turing
 Com objetivo de tratar da complexidade do problema de maneira didática, facilitando nossa argumentação, além de simplificar o processo de desenvolvimento da máquina abstrata, vamos segmentar porções de MT's (Máquinas de Turing) em 'módulos'.
 
-Definida MT como:
+Definida uma MT como:
 $ "MT" = (E, Sigma, Γ, delta, i, F) $
 $E$: Conjunto finito de estados \
 $Sigma$: Alfabeto de entrada \

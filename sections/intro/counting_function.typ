@@ -239,7 +239,7 @@ Agora faremos uma breve verificação formal de que o algoritmo abstraído na m�
 Dado que,
 $ 𝑛, 𝑖 in N $
 $ 𝑥, k_n in {𝑎, 𝑏, 𝑐} $
-$ 𝑤 = k_0 ∗ … ∗ k_n $
+$ 𝑤 = k_1 ∗ … ∗ k_n $
 
 Os passos 2.a) e 4.b) marcam os elementos substituindo-os por $x_\#$ e $y_\#$, respectivamente construindo:
 $ X_w = { j | forall j in N  "tal que" 0 <= j <= n " e" k_j = x } "(Ocorrências de X)" $

@@ -1,4 +1,4 @@
-#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 #import "../intro/intro.typ": *
 
 === Módulo $alpha$
@@ -20,29 +20,40 @@ Vale notar que existe uma alternativa que reduziria o custo computacional da MT,
 Apesar de mais eficiente, isso acrescentaria um número considerável de transições, então optamos por manter essa estrutura.
 
 Cada estado de limpeza, segue o formato
-#import fletcher.shapes: house, diamond, circle, trapezium, bracket, ellipse, brace
+#import fletcher.shapes: brace, bracket, circle, diamond, ellipse, house, trapezium
 #figure(
   caption: "Estado de limpeza",
   kind: "Máquina de Turing",
-  supplement: [Máquina de Turing]
+  supplement: [Máquina de Turing],
 )[
   #diagram(
-    node-stroke: 1pt, {
-      node((0, 0), align(center)[#grid(columns: (auto), rows: 2, row-gutter: 7pt, text(size: 9pt)[Estado], text(size: 9pt)[de limpeza])], shape: circle)
-      edge((0,0), (0,1),  "-|>", label: text(size: 8pt)[$epsilon, epsilon, N$])
-      edge((0,0), (0,0), "-|>", bend: 130deg, loop-angle: 180deg, label: [
+    node-stroke: 1pt,
+    {
+      node(
+        (0, 0),
+        align(center)[#grid(
+          columns: auto,
+          rows: 2,
+          row-gutter: 7pt,
+          text(size: 9pt)[Estado],
+          text(size: 9pt)[de limpeza],
+        )],
+        shape: circle,
+      )
+      edge((0, 0), (0, 1), "-|>", label: text(size: 8pt)[$epsilon, epsilon, N$])
+      edge((0, 0), (0, 0), "-|>", bend: 130deg, loop-angle: 180deg, label: [
         #grid(
-          columns: (auto),
+          columns: auto,
           align: (right),
           row-gutter: 7pt,
           rows: 4,
           text(size: 10pt)[$a,a bar "D"$],
           text(size: 10pt)[$b,b bar "D"$],
           text(size: 10pt)[$c,c bar "D"$],
-          text(size: 10pt)[$\*_\#,* bar "D"$]
-      )
+          text(size: 10pt)[$\*_\#,* bar "D"$],
+        )
       ])
-    }
+    },
   )
 ]
 
@@ -53,26 +64,36 @@ Dando ao módulo $alpha$ o formato:
 #figure(
   caption: $"Raio-x do módulo" alpha$,
   kind: "fluxograma",
-  supplement: [Fluxograma]
+  supplement: [Fluxograma],
 )[
   #diagram(
-      node-stroke: 1pt, {
-        let (a, b, f_b, c, d, f_d, e, f, f_f, g, h) = (
-          (-1, 0),
-          (0, 0), (2, 0),
-          (0, 1),
-          (0, 2), (2, 2),
-          (0, 3),
-          (0, 4), (2, 4),
-          (0, 5),
-          (0, 7),
-        )
+    node-stroke: 1pt,
+    {
+      let (a, b, f_b, c, d, f_d, e, f, f_f, g, h) = (
+        (-1, 0),
+        (0, 0),
+        (2, 0),
+        (0, 1),
+        (0, 2),
+        (2, 2),
+        (0, 3),
+        (0, 4),
+        (2, 4),
+        (0, 5),
+        (0, 7),
+      )
       let trap = trapezium.with(fit: 0.4)
       let ell = ellipse.with(scale: 1.2)
       let row_y = 1
       let ext = (0, -2)
 
-      let title_limpeza = align(center)[#grid(columns: (auto), rows: 2, row-gutter: 7pt, text(size: 8pt)[Estado], text(size: 8pt)[de limpeza])]
+      let title_limpeza = align(center)[#grid(
+        columns: auto,
+        rows: 2,
+        row-gutter: 7pt,
+        text(size: 8pt)[Estado],
+        text(size: 8pt)[de limpeza],
+      )]
 
       // nodes
       node(a, [], name: <Start>)
@@ -101,14 +122,14 @@ Dando ao módulo $alpha$ o formato:
       edge(f, f_f, "-|>", label: text(size: 8pt)[_c_ cumpre $Delta$])
 
       let cleaning_transitions = grid(
-          columns: (auto),
-          align: (right),
-          row-gutter: 7pt,
-          rows: 4,
-          text(size: 10pt)[$a,a bar "D"$],
-          text(size: 10pt)[$b,b bar "D"$],
-          text(size: 10pt)[$c,c bar "D"$],
-          text(size: 10pt)[$\*_\#,* bar "D"$]
+        columns: auto,
+        align: (right),
+        row-gutter: 7pt,
+        rows: 4,
+        text(size: 10pt)[$a,a bar "D"$],
+        text(size: 10pt)[$b,b bar "D"$],
+        text(size: 10pt)[$c,c bar "D"$],
+        text(size: 10pt)[$\*_\#,* bar "D"$],
       )
 
       edge(e, "-|>", e, bend: 130deg, loop-angle: 180deg)[#cleaning_transitions]
@@ -116,9 +137,9 @@ Dando ao módulo $alpha$ o formato:
       edge(g, "-|>", g, bend: 130deg, loop-angle: 180deg)[#cleaning_transitions]
 
       // label
-      node(enclose:(<Start>, (2, 5)), stroke: black, inset: 38pt, snap: false)
-      node(enclose:((2.6, -0.8), (3, 5.5)), shape: brace.with(dir: right, label: [Módulo $alpha$]))
-    }
+      node(enclose: (<Start>, (2, 5)), stroke: black, inset: 38pt, snap: false)
+      node(enclose: ((2.6, -0.8), (3, 5.5)), shape: brace.with(dir: right, label: [Módulo $alpha$]))
+    },
   )
 ]
 

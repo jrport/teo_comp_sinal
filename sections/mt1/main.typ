@@ -1,8 +1,10 @@
 #include "modulo_alfa.typ"
 #pagebreak()
-#include "analise_temporal.typ"
+#include "analise_temporal_alfa.typ"
 #pagebreak()
 #include "alfa_na_integra.typ"
+#pagebreak()
+#include "modulo_beta.typ"
 #pagebreak()
 
 == Máquina na íntegra
