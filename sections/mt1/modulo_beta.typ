@@ -9,59 +9,87 @@ $ gamma_(x)(w) > gamma_(y)(w) and gamma_(x)(w) > gamma_(z)(w) $
 
 Entranto, na condição de haver um empate, onde dois símbolos possuam a mesma cardinalidade, o desempate será definido pela ordem de prioridade.
 
-Nosso módulo então fará o seguinte fluxo:
+Para determinar e resolver casos de empate com maior facilidade, vamos fazer uma pequena modificação em $psi$, para que ao invês de termos como possíveis estados de saída $E_>$ e $E_<=$, tenhamos agora $E_>=$, $E_<$ para satisfazer a estrutura que propomos aqui.
+A essa nova versão de $psi$ daremos o nome $psi'$.
+
+Para que então possamos estrutura o módulo $beta$ como um torneio de entre as três letras de ${a, b, c}$, onde cada confronto compara as cardinalidades de dois símbolos e decide o próximo embate. O formato definido segue:
 
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
-#import fletcher.shapes: trapezium
+#import fletcher.shapes: circle, hexagon, pill
+
 #figure(
-  caption: $"Raio-x do módulo" alpha$,
+  caption: $"Ordem dos duelos do Torneio" beta$,
   kind: "fluxograma",
   supplement: [Fluxograma],
 )[
   #diagram(
     node-stroke: 1pt,
+    edge-stroke: 1pt,
     {
-      let (s, c_x_b, c_x_a, a_x_c) = ((0, 0), (0, 1), (1, 1), (2, 2))
-      // let (fa, b_x_a, )
+      let inicio = (0, 0)
+      let duelo1 = (0, 1)
+      let duelo2_esq = (-1.5, 2)
+      let duelo2_dir = (1.5, 2)
+      let vencedor_a = (-1.5, 3)
+      let vencedor_c = (0, 3)
+      let vencedor_b = (1.5, 3)
 
-      edge(s, c_x_b, "-|>")[Início]
+      edge(inicio, duelo1, "->")[Início]
       node(
-        c_x_b,
-        align(center)[#grid(
-          columns: auto,
-          rows: 2,
-          row-gutter: 7pt,
-          text(size: 10pt)[Testa se],
-          text(size: 10pt)[$gamma_(c)(w) > gamma_(b)(w)$],
-        )],
-        shape: trapezium,
+        duelo1,
+        align(center)[
+          #text(size: 11pt)[$psi'(a, b)$]
+        ],
+        shape: hexagon,
       )
 
-      edge(c_x_b, c_x_a, label: text(size: 10pt)[Sim])
+      edge(duelo1, duelo2_esq, "->", label: text(size: 10pt)[$=<$], label-side: left, label-pos: 0.3)
+      edge(duelo1, duelo2_dir, "->", label: text(size: 10pt)[$<$], label-side: right, label-pos: 0.3)
+
       node(
-        c_x_a,
-        align(center)[#grid(
-          columns: auto,
-          rows: 2,
-          row-gutter: 7pt,
-          text(size: 10pt)[Testa se],
-          text(size: 10pt)[$gamma_(c)(w) > gamma_(a)(w)$],
-        )],
-        shape: trapezium,
+        duelo2_esq,
+        align(center)[
+          #text(size: 11pt)[$psi'(a, c)$]
+        ],
+        shape: hexagon,
       )
 
-      // senão vamos pra a
-      edge(c_x_a, a_x_c, label: text(size: 10pt)[Sim])
       node(
-        a_x_c,
-        align(center)[#grid(
-          columns: auto,
-          rows: 2,
-          row-gutter: 7pt,
-          text(size: 10pt)[Testa se],
-          text(size: 10pt)[$gamma_(a)(w) > gamma_(c)(w)$],
-        )],
-        shape: trapezium,
+        duelo2_dir,
+        align(center)[
+          #text(size: 11pt)[$psi'(b, c)$]
+        ],
+        shape: hexagon,
+      )
+
+      edge(duelo2_esq, vencedor_a, "->", label: text(size: 10pt)[$>=$], label-side: left, label-pos: 0.4)
+      edge(duelo2_esq, vencedor_c, "->", label: text(size: 10pt)[$<$], label-side: right, label-pos: 0.4)
+
+      edge(duelo2_dir, vencedor_c, "->", label: text(size: 10pt)[$<$], label-side: left, label-pos: 0.4)
+      edge(duelo2_dir, vencedor_b, "->", label: text(size: 10pt)[$>=$], label-side: right, label-pos: 0.4)
+
+      node(
+        vencedor_a,
+        align(center)[#text(size: 12pt)[A vence]],
+        shape: circle,
+        fill: rgb("#c8e6c9"),
+        extrude: (0, -2),
+      )
+
+      node(
+        vencedor_c,
+        align(center)[#text(size: 12pt)[C vence]],
+        extrude: (0, -2),
+        shape: circle,
+        fill: rgb("#ffccbc"),
+      )
+
+      node(
+        vencedor_b,
+        align(center)[#text(size: 12pt)[B vence]],
+        extrude: (0, -2),
+        shape: circle,
+        fill: rgb("#ffe0b2"),
       )
     },
   )
