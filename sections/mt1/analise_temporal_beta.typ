@@ -43,15 +43,8 @@ Dessa forma, o custo associado #npsi, considerando o caso 1 ou 3, é de $ "custo
 
 Resta então considerarmos a estrutura maior do torneio para eleger a pior palavra. Como o vencedor participará de 2 duelos, ele deve ser o sufixo mais distante do início da palavra, maximizando o custo associado a computação total, as demais sequências são intercambiáveis.
 
-Então para um $X$ vencedor, a palavra de entrada que maximiza o custo temporal é: $w = z^j + y^k + x^m$, onde $j = k = m - 1$. Implicando num custo total de $ C_"total" = 2 dot (n^2 + n + 1) = 2n^2 + 2n + 2 $ que também é $Theta(n^2)$.
-
-==== Custo total da $"MT"_1$
-
-Portanto, no pior caso, $"MT"_1$, recebe como entrada:
-$ w = z^j + y^k + x^m or w = y^j + z^k + x^m $
-Sendo,
-$ k = j = m - 1 and x, y, z in {a, b, c} and x != y and y != z $
-E determina a avenida $X$ como prioritária com o custo computacional total de:
-$ T(n) = T_"alfa" + T_"beta" = (3n^2) + (2n^2 + 2n + 2) = 5n^2 + 2n + 2 $
-Logo,
-$ "MT"_1 in Theta(n^2) $
+Então para um $X$ vencedor, a palavra de entrada que maximiza o custo temporal é: $w = z^j + y^k + x^m$, onde $j = k = m - 1$. Implicando num custo total de 
+$ C_"total" = 2 dot "custo da limpeza" + 2 dot "custo por duelo" $ 
+$ C_"total" = 2 dot (n) + 2 dot (n^2 + n + 1) = 2n + 2n^2 + 2n + 2 $ 
+$ C_"total" = 2n^2 + 4n + 2 $
+que também é $Theta(n^2)$.
