@@ -47,7 +47,7 @@ Para que então possamos estrutura o módulo $beta$ como um torneio de entre as 
 
       edge(duelo1, limp1, "-|>", label: text(size: 10pt)[$=<$], label-side: left, label-pos: 0.3)
       edge(limp1, duelo2_esq, "-|>", label-side: right, label-pos: 0.3)
-      edge(duelo1, limp2, "-|>")
+      edge(duelo1, limp2, "-|>", label: text(size: 10pt)[$>$], label-side: right, label-pos: 0.3)
       edge(limp2, duelo2_dir, "-|>")
       
       node(
