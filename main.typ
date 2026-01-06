@@ -33,9 +33,9 @@
   #align(center)[
     João Roberto \
     Caio Mello \
-    Jonas \
+    Jonas Oliveira \
     Leandro Barbosa \
-    Vinicius \
+    Vinicius Caires \
   ],
 
   #v(3em)
