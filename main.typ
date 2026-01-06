@@ -53,14 +53,8 @@
 
 #include "sections/intro/main.typ"
 #include "sections/mt1/main.typ"
+#include "sections/mt2/main.typ"
 
-= Máquina de múltiplas fitas
-== Módulos
+= Referências Bibliográficas
 ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
-== Máquina na íntegra
 ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
-== Análise de complexidade
-ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
-== Exemplos
-ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
-
