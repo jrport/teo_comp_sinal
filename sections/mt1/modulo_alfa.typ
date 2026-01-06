@@ -57,8 +57,6 @@ Cada estado de limpeza, segue o formato
   )
 ]
 
-#pagebreak()
-
 Dando ao módulo $alpha$ o formato:
 
 #figure(

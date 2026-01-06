@@ -28,11 +28,13 @@ Para que então possamos estrutura o módulo $beta$ como um torneio de entre as 
     {
       let inicio = (0, 0)
       let duelo1 = (0, 1)
-      let duelo2_esq = (-1.5, 2)
-      let duelo2_dir = (1.5, 2)
-      let vencedor_a = (-1.5, 3)
-      let vencedor_c = (0, 3)
-      let vencedor_b = (1.5, 3)
+      let limp1 = (-1, 2)
+      let limp2 = (1, 2)
+      let duelo2_esq = (-1.5, 3)
+      let duelo2_dir = (1.5, 3)
+      let vencedor_a = (-1.5, 4)
+      let vencedor_c = (0, 4)
+      let vencedor_b = (1.5, 4)
 
       edge(inicio, duelo1, "->")[Início]
       node(
@@ -43,8 +45,21 @@ Para que então possamos estrutura o módulo $beta$ como um torneio de entre as 
         shape: hexagon,
       )
 
-      edge(duelo1, duelo2_esq, "->", label: text(size: 10pt)[$=<$], label-side: left, label-pos: 0.3)
-      edge(duelo1, duelo2_dir, "->", label: text(size: 10pt)[$<$], label-side: right, label-pos: 0.3)
+      edge(duelo1, limp1, "-|>", label: text(size: 10pt)[$=<$], label-side: left, label-pos: 0.3)
+      edge(limp1, duelo2_esq, "-|>", label-side: right, label-pos: 0.3)
+      edge(duelo1, limp2, "-|>")
+      edge(limp2, duelo2_dir, "-|>")
+      
+      node(
+        limp1,
+        text(size: 9pt)[Estado de limpeza],
+        shape: pill,
+      )
+      node(
+        limp2,
+        text(size: 9pt)[Estado de limpeza],
+        shape: pill,
+      )
 
       node(
         duelo2_esq,
@@ -62,11 +77,11 @@ Para que então possamos estrutura o módulo $beta$ como um torneio de entre as 
         shape: hexagon,
       )
 
-      edge(duelo2_esq, vencedor_a, "->", label: text(size: 10pt)[$>=$], label-side: left, label-pos: 0.4)
-      edge(duelo2_esq, vencedor_c, "->", label: text(size: 10pt)[$<$], label-side: right, label-pos: 0.4)
+      edge(duelo2_esq, vencedor_a, "-|>", label: text(size: 10pt)[$>=$], label-side: left, label-pos: 0.4)
+      edge(duelo2_esq, vencedor_c, "-|>", label: text(size: 10pt)[$<$], label-side: right, label-pos: 0.4)
 
-      edge(duelo2_dir, vencedor_c, "->", label: text(size: 10pt)[$<$], label-side: left, label-pos: 0.4)
-      edge(duelo2_dir, vencedor_b, "->", label: text(size: 10pt)[$>=$], label-side: right, label-pos: 0.4)
+      edge(duelo2_dir, vencedor_c, "-|>", label: text(size: 10pt)[$<$], label-side: left, label-pos: 0.4)
+      edge(duelo2_dir, vencedor_b, "-|>", label: text(size: 10pt)[$>=$], label-side: right, label-pos: 0.4)
 
       node(
         vencedor_a,

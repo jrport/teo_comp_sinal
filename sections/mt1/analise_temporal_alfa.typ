@@ -6,7 +6,7 @@ $psi(x, {y, z})$ deve verificar se para um certo $x$ vale:
 
 $ #propriedade_i "onde" x, y, z in {a, b, c} " e " x != y != z $
 
-Para tal, vamos comparar a *cardinalidade* de $x$ com a de $y$ e $z$. Com esse objetivo, utilizamos nossa função de comparação de cardinalidade $psi(x, L)$, sendo $L = {y, z}$.
+Para tal, queremos comparar a *cardinalidade* de $x$ com a de $y$ unida a de $z$. Com esse objetivo, utilizamos nossa função de comparação de cardinalidade $psi(x, L)$, sendo $L = {y, z}$.
 
 Dentro do módulo, substituimos o $E_>$ por $F_x$ simbolizando a parada total da MT1 na decisão de priorizar a avenida $x$. Uma vez que esse estado implica na condição verdade de $Delta$ para o $x$ alvo.
 
@@ -25,18 +25,18 @@ Trateremos por $i$, a iteração atual do passo-a-passo, visto que $psi$ opera c
 #let cases = (
   (
     [Rebobinação da fita],
-    $w = x^k*y^j$,
+    $w = x^j*y^k$,
     [
       A partir de i > 0, essa etapa rebobina a partir da posição do cabeçote determinada no passo 4.b).
-      O pior caso então é o $y^j$ como sufixo da palavra, maximizando a quantidade de transições para rebobinar.
+      O pior caso então é o de $w$ tendo $y^k$ como sufixo da palavra, maximizando a quantidade de transições para rebobinar.
     ],
   ),
   (
     [Busca por um x não marcado],
     $w = y^k * x^j$,
     [
-      Como aqui buscamos um $x$ não pareado, iniciando nossa busca do início de $w$ seguindo também seguindo linearmente.
-      O pior caso é de todos $x$ como sufixo de $w$.
+      Como aqui buscamos um $x$ não pareado, iniciando nossa busca do início de $w$ seguindo linearmente.
+      O pior caso é de todos $x^j$ como sufixo de $w$.
     ],
   ),
   (
@@ -48,19 +48,19 @@ Trateremos por $i$, a iteração atual do passo-a-passo, visto que $psi$ opera c
   ),
   (
     [Buscamos por um y não marcado],
-    $w = x^k*y^j$,
+    $w = x^j*y^k$,
     [
-      Análogo ao passo 2), só que dessa vez queremos que o sufixo de $w$ seja $y^j$.
+      Análogo ao passo 2), só que dessa vez queremos que o sufixo de $w$ seja $y^k$.
     ],
   ),
 )
 
 #set enum(numbering: i => "Passo " + str(i) + " -")
 #for (i, (step_description, worst_word, explanation)) in cases.enumerate() [
-*#enum.item(i + 1, [#step_description])*
---- Pior palavra: #worst_word
+  *#enum.item(i + 1, [#step_description])*
+  --- Pior palavra: #worst_word
 
-#explanation
+  #explanation
 
 ]
 
@@ -106,7 +106,7 @@ Substituindo em $T_1$,
 $ T_1(k) = 2k⋅min(k, m) + 2min(k, m)⋅(min(k, m)-1) $
 $ T_1(k) = 2k⋅min(k, m) ⋅ [k + min(k, m) - 1] $
 
-- Caso 1: $min(k,m) = k$
+- Caso 1: $min(k, m) = k$
 $ T_1(k) = 2k⋅k + 2k⋅(k-1) = 4k^2 - 2k $
 Com a restrição de $k + m = n$ e $k <= m$:
 $ k <= m ==> k <= n - k ==> 2k <= n ==> k < n/2 $
@@ -127,7 +127,7 @@ Ou seja, no caso 1), a pior distribuição possível é $k = n/2$, e como $n = k
 
 O que nos dá um custo máximo de: $T^(A)_1 = 4(n/2)^2 - 2(n/2) = n^2 - n$
 
-- Caso 2: $min(k,m) = m = n - k$
+- Caso 2: $min(k, m) = m = n - k$
 $ T_1(k) = 2k⋅(n - k) + 2(n - k)⋅((n - k)-1) = 2(n-k)(k - 1) $
 $ T_1(k) = 2(n - 1)(n-k) = 2n^2 - 2n - 2n k + 2k $
 
@@ -159,35 +159,48 @@ Obtendo custo total de $n^2 - n$, ou seja, contido no $Theta(n^2)$.
 === O custo da limpeza
 Vamos fazer uma breve demonstração da complexidade da operação de limpeza, previamente definidas como:
 
-#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
-#import fletcher.shapes: house, diamond, circle, trapezium, bracket, ellipse, brace
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
+#import fletcher.shapes: brace, bracket, circle, diamond, ellipse, house, trapezium
 #figure(
   caption: "Estado de limpeza",
   kind: "Máquina de Turing",
-  supplement: [Máquina de Turing]
+  supplement: [Máquina de Turing],
 )[
   #diagram(
-    node-stroke: 1pt, {
-      node((0, 0), align(center)[#grid(columns: (auto), rows: 2, row-gutter: 7pt, text(size: 9pt)[Estado], text(size: 9pt)[de limpeza])], shape: circle)
-      edge((0,0), (0,0), "-|>", bend: 130deg, loop-angle: 180deg, label: [
+    node-stroke: 1pt,
+    {
+      node(
+        (0, 0),
+        align(center)[#grid(
+          columns: auto,
+          rows: 2,
+          row-gutter: 7pt,
+          text(size: 9pt)[Estado],
+          text(size: 9pt)[de limpeza],
+        )],
+        shape: circle,
+      )
+      edge((0, 0), (0, 0), "-|>", bend: 130deg, loop-angle: 180deg, label: [
         #grid(
-          columns: (auto),
+          columns: auto,
           align: (right),
           row-gutter: 7pt,
           rows: 4,
           text(size: 10pt)[$a,a bar "D"$],
           text(size: 10pt)[$b,b bar "D"$],
           text(size: 10pt)[$c,c bar "D"$],
-          text(size: 10pt)[$\*_\#,* bar "D"$]
-      )
+          text(size: 10pt)[$\*_\#,* bar "D"$],
+        )
       ])
-    }
+    },
   )
 ]
 
-O custo aqui é o da distância do ponto de entrada no _estado de limpeza_ ao fim da palavra de entrada, visto que iteramos por toda a palavra removendo os símbolos marcados.
+O custo aqui é o da distância do ponto de entrada no _estado de limpeza_ ao fim da palavra de entrada, visto que iteramos por todos os símbolos removendo os marcados.
 
-Como entramos nesse estado somente no caso de escape de $psi$ por $E_<=$ que sempre precede o posicionamento do cabeçote no início da fita. Ou seja, sempre será necessário traversar por toda a palavra nesse estado. Dessa forma, o custo aqui é de $n$, sendo $n = |w|$, o qual obviamente pertence a $Theta(n)$.
+Como entramos nesse estado somente no caso de escape de $psi$ por $E_<=$ que sempre precede o posicionamento do cabeçote no início da fita. 
+
+Ou seja, o cabeçote estará no início da fita, portanto o custo aqui é de $n$, sendo $n = |w|$, o qual obviamente pertence a $Theta(n)$.
 
 === Conclusão do custo de $alpha$
 Podemos finalmente estipular o custo acumulado de $alpha$. Dado que consideramos o pior caso como o de empate contínuo, teremos:
@@ -196,12 +209,12 @@ Podemos finalmente estipular o custo acumulado de $alpha$. Dado que consideramos
 #let items = (
   ("a", ("b", "c")),
   ("b", ("a", "c")),
-  ("c", ("a", "c"))
+  ("c", ("a", "c")),
 )
 
 #for (x, (y, z)) in items [
-+ $psi(#x, {#y, #z})$: $n^2 - n$
-+ Operação de limpeza: $n$
+  + $psi(#x, {#y, #z})$: $n^2 - n$
+  + Operação de limpeza: $n$
 ]
 
 Totalizando,

@@ -8,6 +8,7 @@
 #pagebreak()
 #include "modded_couting_function.typ"
 #pagebreak()
+#include "analise_temporal_beta.typ"
 
 == Máquina na íntegra
 ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis

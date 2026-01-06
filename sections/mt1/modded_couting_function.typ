@@ -88,7 +88,7 @@ Para tal, definimos #npsi como segue:
   ]
 ]
 
-Preservamos todas as transições de $psi$, apenas substituimos $E_>$ por $E_>=$ e $E_<=$ por $E_<$, respectivamente e acrescentamos um loop de busca por um $x$.
+Preservamos todas as transições de $psi$, apenas substituimos $E_>$ por $E_>=$ e $E_<=$ por $E_<$, e acrescentamos um loop de busca por um $x$.
 
 De forma que, após determinarmos que não existem mais símbolos $x$ na fita após $E_2$, buscamos por pelo menos um símbolo $y$ para garantir que $gamma_(x)(w) < gamma_(y)(w)$.
 
@@ -115,15 +115,15 @@ $ E_2 -->^(epsilon, epsilon | I) E_6 $
 2. Em $E_6$, a máquina move-se à direita até:
 $ E_6 -->^(y, y | D) E_7 quad "ou" quad E_6 -->^(<, < | D) E_8 $
 
-Então, dado uma palavra $w$ na fita e os conjuntos de ocorrência $X$ e $overline(X)$, que foram previamente definidos, vamos supor os 3 possíveis casos:
+Então, dado uma palavra $w$ na fita e os conjuntos de ocorrência $X$ e $overline(X)$, que foram previamente definidos, vamos supor os 3 possíveis casos quanta a comparação da cardinalidade:
 
 *Caso 1:* $|X| = |Y|$
 
-Teremos todos os $x$ e $y$ pareados. A máquina não encontra $y$ restantes em $E_6$, eventualmente alcançando $E_>=$ (diretamente ou via $E_8$).
+Teremos todos os $x$ e $y$ pareados já pareados, vide o funcionamento da $psi$. A máquina não encontra $y$ restantes em $E_6$, eventualmente alcançando $E_>=$ (diretamente ou via $E_8$).
 
 *Caso 2:* $|X| < |Y|$
 
-Existirão símbolos $y$ não processados. A execução segue:
+Existirão símbolos $y$ não processados, vide o funcionamento de $psi$. A execução segue:
 $ E_6 -->^(y, y | D) E_8 -->^(*, * | D) E_8 -->^(epsilon, epsilon | I) E_< $
 
 *Caso 3:* $|X| > |Y|$

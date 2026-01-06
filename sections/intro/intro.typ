@@ -24,7 +24,7 @@ Como parte desse trabalho, temos a missão de modular Máquinas de Turing que so
 
 $ "Seja" w "uma palavra e" n in bb(N) $
 $ w = phi_1 * ... * phi_(n - 1) * phi_n $
-$ phi_k in {a, b, c} "tal que" 0 <= k <= n $
+$ phi_k in {a, b, c} "tal que" 1 <= k <= n $
 
 Nesta representação, cada carro na avenida A será uma letra 'a', na avenida B, a letra 'b', e na C, 'c'.
 

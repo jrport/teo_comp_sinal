@@ -6,15 +6,15 @@ A peça central de $"MT1"$ é o súbmódulo $psi$, o qual também chamaremos de 
 
 Definindo formalmente,
 $ L subset Gamma $
-$ X_w, L_w "são os conjuntos de ocorrências de" L, x "em" w $
+$ L_w, X_w "são os conjuntos de ocorrências dos elementos de" L "e de" x "em" w $
 $ psi(x, L): "Avalia a natureza do produto cartesiano" X_w times L_w $
 
-Verificando a ocorrẽncia de bijeção, injeção e/ou sobrejeção abstraímos sentidos de acordo ao definido pela Teoria de Conjuntos, em caso de:
-+ bijeção, intuimos que $gamma_(x)(w) = gamma_(y)(w) + gamma_(z)(w)$;
-+ injeção, mas não sobrejeção, $gamma_(x)(w) < gamma_(y)(w) + gamma_(z)(w)$;
-+ sobrejeção, mas não injeção, $gamma_(x)(w) > gamma_(y)(w) + gamma_(z)(w)$
+Verificando a ocorrência de bijeção, injeção e/ou sobrejeção, abstraímos sentidos de acordo ao definido pela Teoria de Conjuntos, em caso de:
++ bijeção, intuimos que $gamma_(x)(w) = sum_(y in L) gamma_(y)(w)$;
++ injeção, mas não sobrejeção, $gamma_(x)(w) < sum_(y in L) gamma_(y)(w)$;
++ sobrejeção, mas não injeção, $gamma_(x)(w) > sum_(y in L) gamma_(y)(w)$
 
-Como as regras de negócio estipuladas ao sistema de acordo ao enunciado da questão preocupam-se apenas com o que já definimos em $Delta$, o súbmódulo $psi$ foca-se no caso 2).
+Como as regras de negócio estipuladas ao sistema de acordo ao enunciado da questão preocupam-se apenas com o que já definimos em $Delta$, o súbmódulo $psi$ vai ter apenas dois estados de aceitação ou parada, um para bijeção ou sobrejeção (1 ou 3) e outra para injeção (2).
 
 A título de demonstração, tratemos $L = {y}$, $psi(x, L)$ assume o formato:
 
@@ -89,14 +89,14 @@ Os dois estados de saída ou parada desse submódulo serão $E_<$ e $E_>=$, os q
 
 Naturalmente, em caso de $|L| > 1$, as transições que contenham símbolos de $L$ na representação acima, seriam múltiplas mas ainda de formato análogo, apenas tendo uma correspondente para cada símbolo de $L$.
 
-Descrevendo de forma direta, a função de contagem que definimos tem usa de um _loop_ (estrutura de repetição) e vai efetivamente *mapeando* cada ocorrência de $x$ com ocorrências dos símbolos em $L$, nunca repetindo items envolvidos entre pares.
+Descrevendo de forma direta, a função de contagem que definimos faz uso de um _loop_ (estrutura de repetição) e vai efetivamente *mapeando* cada ocorrência de $x$ com ocorrências dos símbolos em $L$, nunca repetindo items envolvidos entre pares.
 
 Para isso, é feita uma marcação no formato:
 $ "Sendo" x in Gamma | "Marcamos um" x "qualquer o substituindo pelo respectivo" x_\# $
 
 Essa marcação sinaliza que esse símbolo deve ser ignorado nas iterações seguintes do loop.
 
-Vamos então destrinchar o funcionamento de $psi$ transição a transição para verificarmos formalmente a computação das seguintes propriedades:
+Vamos então destrinchar o funcionamento de $psi$, transição a transição, para verificarmos formalmente a computação das seguintes propriedades:
 $ "Parar em" E_> <=> #propriedade_i $
 $ "Sair por" E_<= <=> gamma_(x)(w) <= gamma_(y)(w) + gamma_(z)(w) $
 
