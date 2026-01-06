@@ -23,8 +23,8 @@
 Como parte desse trabalho, temos a missão de modular Máquinas de Turing que solucionem o problema preposto. Para tal, teremos como entrada uma string representando a distribuição de carros dentre as avenidas A, B e C, seguindo o formato:
 
 $ "Seja" w "uma palavra e" n in bb(N) $
-$ w = phi_1 * ... * phi_(n - 1) * phi_n $
-$ phi_k in {a, b, c} "tal que" 1 <= k <= n $
+$ w = phi_0 * ... * phi_(n - 1) * phi_n $
+$ phi_k in {a, b, c} "tal que" 0 <= k <= |w| $
 
 Nesta representação, cada carro na avenida A será uma letra 'a', na avenida B, a letra 'b', e na C, 'c'.
 
