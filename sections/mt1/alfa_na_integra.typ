@@ -5,9 +5,9 @@
 === Módulo $alpha$ na íntegra
 
 #figure(
-  caption: [Diagrama completo do módulo $alpha$ com submódulos $psi$ expandidos],
-  kind: "Máquina de Turing",
-  supplement: [Máquina de Turing]
+  caption: $"Módulo" alpha$,
+  kind: "Módulo",
+  supplement: [Módulo]
 )[
   #diagram(
     node-stroke: 1pt,
