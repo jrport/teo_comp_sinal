@@ -1,4 +1,4 @@
-= Máquina de múltiplas fitas
+= Máquina de múltiplas fitas ($"MT"_2$)
 
 Com o objetivo de apresentar uma solução mais eficiente do que a MT1,
 introduzimos uma Máquina de Turing determinística de múltiplas fitas,
@@ -216,7 +216,7 @@ $ T_1(n) = n $
 
 e
 
-$ T_1(n) in O(n) $.
+$ T_1(n) in O(n) $
 
 === Construção da fita do total de veículos
 
@@ -227,7 +227,7 @@ $ T_2(n) = n $
 
 e
 
-$ T_2(n) in O(n) $.
+$ T_2(n) in O(n) $
 
 === Cálculo da metade do total
 Para calcular a metade do total de veículos, a máquina remove dois símbolos
@@ -241,7 +241,7 @@ $ floor(n / 2) $
 iterações são realizadas.
 Assim:
 
-$ T_3(n) in O(n) $.
+$ T_3(n) in O(n) $
 
 === Verificação de maioria absoluta e comparações
 
@@ -278,7 +278,7 @@ $ T_4(n) <= n $
 
 e, consequentemente:
 
-$ T_4(n) ∈ O(n) $.
+$ T_4(n) ∈ O(n) $
 
 
 === Escrita da saída e encerramento
@@ -296,7 +296,7 @@ Todas as operações dessa etapa envolvem um número constante de leituras,
 escritas e movimentos de cabeçote, independentemente do tamanho da entrada.
 Assim, o custo temporal dessa fase é constante:
 
-$ T_5(n) ∈ O(1) $.
+$ T_5(n) ∈ O(1) $
 
 === Custo total no pior caso
 
@@ -317,7 +317,7 @@ $ T(n) = n + n + floor(n / 2) + O(n) + O(1) $
 
 Agrupando os termos dominantes, obtém-se:
 
-$ T(n) ∈ O(n) $.
+$ T(n) ∈ O(n) $
 
 
 === Complexidade em número de estados
@@ -336,7 +336,7 @@ exclusivamente pela especificação do algoritmo.
 
 Portanto, a complexidade da MT2 em número de estados é constante:
 
-$ |Q| ∈ O(1) $.
+$ |Q| ∈ O(1) $
 
 
 == Exemplos passo a passo
@@ -469,7 +469,7 @@ Essas operações implicam que símbolos da entrada e de estruturas auxiliares
 são revisitados um número linear de vezes,
 o que conduz a um tempo total de execução da ordem de:
 
-$ Θ(n^2) $.
+$ Θ(n^2) $
 
 Por outro lado, a MT2 explora o modelo de Máquina de Turing multifitas,
 dispondo de uma fita de entrada e três fitas auxiliares,
@@ -488,7 +488,7 @@ no tamanho da entrada.
 
 Assim, o tempo total de execução da MT2 é:
 
-$ T(n) ∈ O(n) $.
+$ T(n) ∈ O(n) $
 
 Essa diferença evidencia o ganho assintótico proporcionado
 pelo uso do modelo multifitas:
@@ -496,61 +496,3 @@ embora ambos os modelos sejam computacionalmente equivalentes
 em termos de linguagens reconhecíveis,
 a MT2 apresenta eficiência assintoticamente superior
 em relação à MT1 para o problema considerado.
-
-= Considerações finais
-
-Neste trabalho, foi desenvolvido e analisado um sistema formal de decisão
-para controle de tráfego urbano,
-baseado em Máquinas de Turing,
-com o objetivo de determinar, de forma rigorosa,
-qual avenida de um cruzamento deve receber prioridade no semáforo.
-
-Inicialmente, o problema foi modelado utilizando uma Máquina de Turing
-determinística de fita única (MT1),
-na qual todas as etapas de contagem, comparação e desempate
-são realizadas sobre uma única fita de trabalho.
-Essa abordagem permitiu uma construção modular detalhada,
-mas implicou em múltiplas varreduras da fita e rebobinamentos frequentes,
-resultando em um custo computacional quadrático no pior caso,
-formalmente demonstrado como pertencente a $Θ(n^2)$.
-
-Em seguida, o mesmo problema foi reespecificado
-no modelo de Máquina de Turing determinística de múltiplas fitas (MT2).
-A separação física das informações em uma fita de entrada
-e fitas auxiliares independentes
-possibilitou a execução das principais operações
-— leitura, contagem, cálculo da metade e comparações —
-por meio de varreduras lineares e não destrutivas.
-Como consequência, todas as etapas do processamento da MT2
-foram demonstradas como executáveis em tempo linear,
-resultando em uma complexidade total de $O(n)$.
-
-A comparação entre MT1 e MT2 evidencia de forma clara
-o ganho assintótico proporcionado pelo modelo multifitas.
-Embora ambos os modelos sejam equivalentes
-em termos de poder computacional e linguagens reconhecíveis,
-a MT2 apresenta eficiência significativamente superior
-para o problema proposto,
-reforçando a importância da escolha adequada do modelo de computação
-na análise de algoritmos.
-
-Além da análise temporal,
-o trabalho também demonstrou que o número de estados da MT2
-é constante e independente do tamanho da entrada,
-o que reforça a viabilidade estrutural da solução proposta.
-Os exemplos passo a passo apresentados
-complementam a descrição formal,
-tornando explícita a evolução do conteúdo das fitas
-e o processo de decisão em diferentes cenários de entrada.
-
-Por fim, este estudo destaca como modelos clássicos
-da computação teórica podem ser aplicados
-à formalização de problemas do mundo real,
-como o controle inteligente de tráfego urbano.
-A abordagem adotada demonstra que,
-mesmo em sistemas abstratos como Máquinas de Turing,
-é possível capturar regras práticas de decisão,
-analisar corretude e eficiência,
-e comparar soluções sob diferentes arquiteturas computacionais,
-contribuindo tanto para a formação teórica
-quanto para a compreensão de aplicações computacionais modernas.
