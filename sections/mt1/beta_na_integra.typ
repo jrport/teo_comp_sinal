@@ -12,60 +12,62 @@
     )[
       #diagram(
         node-stroke: .1em,
+        spacing: (25pt, 17pt),
         {
           let (a, b, c, d, e, f, g, h, i, j) = (
-            (-0.5, 0),
-            (0.5, 0),
-            (4.0, 0),
-            (6.5, 4),
-            (4.0, 2),
-            (4.0, 4),
-            (6.5, 0),
-            (9.0, 0),
-            (6.5, 2),
-            (9.0, 2),
+            (0.0, -0.5),
+            (0, 0.5),
+            (0, 4.0),
+            (-4, 6.5),
+            (-2, 4.0),
+            (-4, 4.0),
+            (0, 6.5),
+            (2, 6.5),
+            (-2, 6.5),
+            (4, 6.5),
           )
           let format = circle
           let row_y = 1
 
-          node(h, align(center)[$E_8$], shape: format, stroke: red)
-          edge(h, "-|>", h, bend: -130deg, loop-angle: 180deg, stroke: red)[$\*,\* bar "D"$]
-          edge(g, "-|>", h, stroke: red)[$b,b bar D$]
-          edge(h, "-|>", j, stroke: red)[$epsilon,epsilon bar "D"$]
-
-          node(a, [])
-          edge(a, b, "=>", label: "Início")
+          node(h, align(center)[$E_8$], shape: format)
           node(b, align(center)[$E_1$], shape: format)
-          edge(b, "-|>", bend: -130deg, loop-angle: 270deg)[
+          node(c, align(center)[$E_2$], shape: format)
+          node(e, align(center)[$E_4$], shape: format)
+          node(g, align(center)[$E_6$], shape: format)
+          node(f, align(center)[$E_5$], shape: format)
+          node(i, align(center)[$E_7$], shape: format)
+          node(j, align(center)[$E_<$], shape: format)
+          node(d, align(center)[$E_>=$], shape: format)
+          node(a, [])
+
+          edge(h, "-|>", h, bend: -130deg, loop-angle: 270deg)[$\*,\* bar "D"$]
+          edge(g, "-|>", h)[$b,b bar D$]
+          edge(h, "-|>", j)[$epsilon,epsilon bar "D"$]
+
+          edge(a, b, "=>", label: "Início")
+          edge(b, "-|>", b, bend: -130deg, loop-angle: 0deg)[
             $\*,\* bar "E"$
           ]
-          node(c, align(center)[$E_2$], shape: format)
-          node(g, align(center)[$E_6$], shape: format, stroke: red)
-          node(j, align(center)[$E_<$], shape: format)
-          edge(g, "-|>", i, label-side: left, stroke: red)[$<,< bar "D"$]
+          edge(g, "-|>", i, label-side: left)[$<,< bar "D"$]
 
-          edge(g, "-|>", g, bend: -130deg, loop-angle: 270deg, stroke: red)[$*, *, E$]
-          edge(c, "-|>", c, bend: -130deg, loop-angle: 260deg)[
+          edge(g, "-|>", g, bend: -130deg, loop-angle: 90deg)[$*, *, E$]
+          edge(c, "-|>", c, bend: -130deg, loop-angle: 180deg)[
             $*_\#,*_\# bar "D"\
             b,b bar "D"$
           ]
           edge(b, "-|>", c)[<,<|D]
           edge(c, "-|>", g)[$epsilon, epsilon bar I$]
-          node(d, align(center)[$E_>=$], shape: format)
-          node(i, align(center)[$E_7$], shape: format, stroke: red)
-          edge(i, "-|>", d, stroke: red)[$epsilon, epsilon bar I$]
+          edge(i, "-|>", d)[$epsilon, epsilon bar I$]
           edge(c, e, "-|>", label-side: left)[$a, a_\# bar "E"$]
-          edge(e, "-|>", e, bend: -130deg, loop-angle: 170deg)[
+          edge(e, "-|>", e, bend: -130deg, loop-angle: 90deg)[
             $\*,\* bar "E"$
           ]
-          edge(i, "-|>", i, bend: -130deg, loop-angle: 180deg, stroke: red)[
+          edge(i, "-|>", i, bend: -130deg, loop-angle: 90deg)[
             $\*,\* bar "D"$
           ]
-          node(e, align(center)[$E_4$], shape: format)
           edge(e, f, "-|>", label-side: left)[
             $<, < bar "D"$
           ]
-          node(f, align(center)[$E_5$], shape: format)
           edge(f, "-|>", f, bend: -130deg, loop-angle: 0deg)[
             #grid(
               columns: auto,
