@@ -54,3 +54,7 @@
 #include "sections/intro/main.typ"
 #include "sections/mt1/main.typ"
 #include "sections/mt2/main.typ"
+
+= Referências Bibliográficas
+ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
+ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
