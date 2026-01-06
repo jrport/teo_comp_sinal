@@ -23,10 +23,7 @@ $ "MT"_1 in Theta(n^2) $
 
 #pagebreak()
 #include "beta_na_integra.typ"
+#include "maquina_na_integra.typ"
 
-== Máquina na íntegra
-ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
-== Análise de complexidade
-ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis
 == Exemplos
 ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis ipsi literis

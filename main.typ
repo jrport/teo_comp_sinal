@@ -1,4 +1,4 @@
-#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 #show link: it => {
   set text(fill: rgb("#6a41ff"))
   underline(it)
@@ -31,12 +31,12 @@
   #v(2em)
 
   #align(center)[
-      Caio Mello - XXXX \
-      João Roberto - 222217111 \
-      Jonas - ZZZZZZZZ \
-      Leandro - ZZZZZZZZ \
-      Vinicius - YYYYYYYYY \
-    ],
+    João Roberto \
+    Caio Mello \
+    Jonas \
+    Leandro Barbosa \
+    Vinicius \
+  ],
 
   #v(3em)
 

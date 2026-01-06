@@ -15,7 +15,6 @@
         node-stroke: .1em,
         spacing: (25pt, 17pt),
         {
-          // ========== DUELO 1: ψ(a,b) ==========
           let (a1, b1, c1, d1, e1, f1, g1, h1, i1, j1) = (
             (0.0, -0.5),
             (0, 0.5),
@@ -31,7 +30,6 @@
 
           let format = circle
 
-          // Nodes do Duelo 1
           node(h1, align(center)[$E_8$], shape: format)
           node(b1, align(center)[$E_1$], shape: format)
           node(c1, align(center)[$E_2$], shape: format)
@@ -43,7 +41,6 @@
           node(d1, align(center)[$E_>=^((1))$], shape: format)
           node(a1, [])
 
-          // Edges do Duelo 1
           edge(h1, "-|>", h1, bend: -130deg, loop-angle: 270deg)[$\*,\* bar "D"$]
           edge(g1, "-|>", h1)[$b,b bar D$]
           edge(h1, "-|>", j1)[$epsilon,epsilon bar "D"$]
@@ -75,41 +72,48 @@
           edge(f1, b1, "-|>", label-side: left)[$b,b_\# bar "E"$]
           edge(f1, d1, "-|>")[$epsilon,epsilon bar "I"$]
 
-          // ========== LIMPEZA 1 (esquerda) ==========
           let limp1_esq = (-5, 8.5)
           node(
             limp1_esq,
-            align(center)[
-              #text(size: 8pt, weight: "bold")[Limpeza]
-            ],
-            shape: format,
-            fill: rgb("#fff9c4"),
+            align(center)[#grid(
+              columns: auto,
+              rows: 2,
+              row-gutter: 5pt,
+              text(size: 8pt)[Limpeza],
+              text(size: 8pt)[4],
+            )],
+            shape: circle,
           )
 
           edge(d1, limp1_esq, "-|>", label-side: left)
           edge(limp1_esq, "-|>", limp1_esq, bend: -130deg, loop-angle: 90deg, label-size: 6pt)[
-            $a_\#,a bar "D"\
-            b_\#,b bar "D"$
+            $*_\#,* bar "D"\
+            a,a bar "D" \
+            b,b bar "D" \
+            c,c bar "D"$
           ]
 
-          // ========== LIMPEZA 2 (direita) ==========
           let limp1_dir = (5, 8.5)
           node(
             limp1_dir,
-            align(center)[
-              #text(size: 8pt, weight: "bold")[Limpeza]
-            ],
-            shape: format,
-            fill: rgb("#fff9c4"),
+            align(center)[#grid(
+              columns: auto,
+              rows: 2,
+              row-gutter: 5pt,
+              text(size: 8pt)[Limpeza],
+              text(size: 8pt)[4],
+            )],
+            shape: circle,
           )
 
           edge(j1, limp1_dir, "-|>", label-side: right)
           edge(limp1_dir, "-|>", limp1_dir, bend: -130deg, loop-angle: 90deg, label-size: 6pt)[
-            $a_\#,a bar "D"\
-            b_\#,b bar "D"$
+            $*_\#,* bar "D"\
+            a,a bar "D" \
+            b,b bar "D" \
+            c,c bar "D"$
           ]
 
-          // ========== DUELO 2: ψ(a,c) - quando a>=b ==========
           let offset_esq = -8.0
           let y_offset = 9.0
 
@@ -126,10 +130,8 @@
             (0, 15.5),
           )
 
-          // Conexão da Limpeza 1 para Duelo 2
           edge(limp1_esq, a2, "-|>", label: text(size: 7pt)[$epsilon, epsilon bar I$], label-side: left)
 
-          // Nodes do Duelo 2
           node(h2, align(center)[#text(size: 8pt)[$E_8$]], shape: format, height: 8mm, width: 8mm)
           node(b2, align(center)[#text(size: 8pt)[$E_1$]], shape: format, height: 8mm, width: 8mm)
           node(c2, align(center)[#text(size: 8pt)[$E_2$]], shape: format, height: 8mm, width: 8mm)
@@ -137,25 +139,10 @@
           node(g2, align(center)[#text(size: 8pt)[$E_6$]], shape: format, height: 8mm, width: 8mm)
           node(f2, align(center)[#text(size: 8pt)[$E_5$]], shape: format, height: 8mm, width: 8mm)
           node(i2, align(center)[#text(size: 8pt)[$E_7$]], shape: format, height: 8mm, width: 8mm)
-          node(
-            j2,
-            align(center)[#text(size: 10pt, weight: "bold")[C]],
-            shape: format,
-            fill: rgb("#ffccbc"),
-            height: 12mm,
-            width: 12mm,
-          )
-          node(
-            d2,
-            align(center)[#text(size: 10pt, weight: "bold")[A]],
-            shape: format,
-            fill: rgb("#c8e6c9"),
-            height: 12mm,
-            width: 12mm,
-          )
+          node(j2, [$F_c$], shape: circle, extrude: (0, -2))
+          node(d2, [$F_a$], shape: circle, extrude: (0, -2))
           node(a2, [])
 
-          // Edges do Duelo 2
           edge(h2, "-|>", h2, bend: -130deg, loop-angle: 270deg, label-size: 7pt)[$\*,\* bar "D"$]
           edge(g2, "-|>", h2, label-size: 7pt)[$c,c bar D$]
           edge(h2, "-|>", j2, label-size: 7pt)[$epsilon,epsilon bar "D"$]
@@ -187,7 +174,6 @@
           edge(f2, b2, "-|>", label-side: left, label-size: 7pt)[$c,c_\# bar "E"$]
           edge(f2, d2, "-|>", label-size: 7pt)[$epsilon,epsilon bar "I"$]
 
-          // ========== DUELO 3: ψ(b,c) - quando b>a ==========
           let offset_dir = 8.0
 
           let (a3, b3, c3, d3, e3, f3, g3, h3, i3, j3) = (
@@ -203,10 +189,8 @@
             (offset_dir + -8, y_offset + 6.5),
           )
 
-          // Conexão da Limpeza 2 para Duelo 3
           edge(limp1_dir, a3, "-|>", label: text(size: 7pt)[$epsilon, epsilon bar I$], label-side: right)
 
-          // Nodes do Duelo 3
           node(h3, align(center)[#text(size: 8pt)[$E_8$]], shape: format, height: 8mm, width: 8mm)
           node(b3, align(center)[#text(size: 8pt)[$E_1$]], shape: format, height: 8mm, width: 8mm)
           node(c3, align(center)[#text(size: 8pt)[$E_2$]], shape: format, height: 8mm, width: 8mm)
@@ -214,25 +198,10 @@
           node(g3, align(center)[#text(size: 8pt)[$E_6$]], shape: format, height: 8mm, width: 8mm)
           node(f3, align(center)[#text(size: 8pt)[$E_5$]], shape: format, height: 8mm, width: 8mm)
           node(i3, align(center)[#text(size: 8pt)[$E_7$]], shape: format, height: 8mm, width: 8mm)
-          node(
-            j3,
-            align(center)[#text(size: 10pt, weight: "bold")[C]],
-            shape: format,
-            fill: rgb("#ffccbc"),
-            height: 12mm,
-            width: 12mm,
-          )
-          node(
-            d3,
-            align(center)[#text(size: 10pt, weight: "bold")[B]],
-            shape: format,
-            fill: rgb("#ffe0b2"),
-            height: 12mm,
-            width: 12mm,
-          )
+          node(j3, [$F_c$], shape: circle, extrude: (0, -2))
+          node(d3, [$F_b$], shape: circle, extrude: (0, -2))
           node(a3, [])
 
-          // Edges do Duelo 3
           edge(h3, "-|>", h3, bend: -130deg, loop-angle: 270deg, label-size: 7pt)[$\*,\* bar "D"$]
           edge(g3, "-|>", h3, label-size: 7pt)[$c,c bar D$]
           edge(h3, "-|>", j3, label-size: 7pt)[$epsilon,epsilon bar "D"$]

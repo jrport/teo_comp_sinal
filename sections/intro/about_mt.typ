@@ -1,6 +1,6 @@
-#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 #import "intro.typ": *
-#import fletcher.shapes: house, diamond, circle
+#import fletcher.shapes: circle, diamond, house
 
 
 = Máquinas de Turing
@@ -60,11 +60,12 @@ A macroarquitetura da máquina assume o formato:
 #figure(
   caption: "Arquitetura do automômato",
   kind: "fluxograma",
-  supplement: [Fluxograma]
+  supplement: [Fluxograma],
 )[
   #align(center, [
     #diagram(
-      node-stroke: 1pt, {
+      node-stroke: 1pt,
+      {
         let (a, b, c) = ((-0.5, 0), (0.5, 0), (3.5, 0))
 
         node(a, [])
@@ -74,8 +75,10 @@ A macroarquitetura da máquina assume o formato:
         edge(a, b, "-|>", label: text(size: 8pt)[Início])
 
         edge(
-          b, c, "-|>",
-          label: [#align(center, [#text(size: 10pt)[Se o módulo $alpha$\ não parar]])]
+          b,
+          c,
+          "-|>",
+          label: [#align(center, [#text(size: 10pt)[Se o módulo $alpha$\ não parar]])],
         )
 
 
@@ -84,7 +87,7 @@ A macroarquitetura da máquina assume o formato:
         let ext = (0, -2)
 
         let bA = (xA - 1, row_y)
-        let bB = (xA,     row_y)
+        let bB = (xA, row_y)
         let bC = (xA + 1, row_y)
 
         node(bA, align(center)[$F_a$], extrude: ext)
@@ -98,17 +101,17 @@ A macroarquitetura da máquina assume o formato:
         let xB = 3.5
 
         let cA = (xB - 1, row_y)
-        let cB = (xB,     row_y)
+        let cB = (xB, row_y)
         let cC = (xB + 1, row_y)
 
-        node(cA, align(center)[$F_a$], extrude: ext)
-        node(cB, align(center)[$F_b$], extrude: ext)
-        node(cC, align(center)[$F_c$], extrude: ext)
+        node(cA, align(center)[$F^(')_a$], shape: circle, extrude: ext)
+        node(cB, align(center)[$F^(')_b$], shape: circle, extrude: ext)
+        node(cC, align(center)[$F^(')_c$], shape: circle, extrude: ext)
 
         edge(c, cA, "-|>")
         edge(c, cB, "-|>")
         edge(c, cC, "-|>")
-      }
+      },
     )
   ])
 ]
