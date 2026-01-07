@@ -24,4 +24,4 @@ $ "MT"_1 in Theta(n^2) $
 #pagebreak()
 #include "beta_na_integra.typ"
 #include "maquina_na_integra.typ"
-// #include "exemplos.typ"
+#include "exemplos.typ"
